@@ -30,7 +30,7 @@ version() {
   if [[ "${DEPENDENCY}" == "jdk" ]]; then
     local PATTERN='JAVA_VERSION="([0-9]+)\.?([0-9]*)\.?([0-9]*)_?([0-9]+)?"'
 
-    if [[ $(tar xOzf "${ROOT}"/dependency/graalvm-ce-java*-linux-amd64-*.tar.gz 'graalvm-ce-java*/release$' | grep JAVA_VERSION) =~ ${PATTERN} ]]; then
+    if [[ $(tar xOzf --wildcards "${ROOT}"/dependency/graalvm-ce-java*-linux-amd64-*.tar.gz 'graalvm-ce-java*/release$' | grep JAVA_VERSION) =~ ${PATTERN} ]]; then
       if  [[ "${BASH_REMATCH[1]}" = "1" ]]; then
         echo "${BASH_REMATCH[2]}.${BASH_REMATCH[3]}.${BASH_REMATCH[4]}"
         return
