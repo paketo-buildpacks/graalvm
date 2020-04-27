@@ -54,6 +54,30 @@ stacks  = [ "io.buildpacks.stacks.bionic", "org.cloudfoundry.stacks.cflinuxfs3" 
   uri  = "https://openjdk.java.net/legal/gplv2+ce.html"
 
 [[metadata.dependencies]]
+id      = "native-image-svm"
+name    = "GraalVM Native Image Substrate VM"
+version = "8.0.0"
+uri     = "placeholder"
+sha256  = "placeholder"
+stacks  = [ "io.buildpacks.stacks.bionic", "org.cloudfoundry.stacks.cflinuxfs3" ]
+
+  [[metadata.dependencies.licenses]]
+  type = "GPL-2.0 WITH Classpath-exception-2.0"
+  uri  = "https://openjdk.java.net/legal/gplv2+ce.html"
+
+[[metadata.dependencies]]
+id      = "native-image-svm"
+name    = "GraalVM Native Image Substrate VM"
+version = "11.0.0"
+uri     = "placeholder"
+sha256  = "placeholder"
+stacks  = [ "io.buildpacks.stacks.bionic", "org.cloudfoundry.stacks.cflinuxfs3" ]
+
+  [[metadata.dependencies.licenses]]
+  type = "GPL-2.0 WITH Classpath-exception-2.0"
+  uri  = "https://openjdk.java.net/legal/gplv2+ce.html"
+
+[[metadata.dependencies]]
 id      = "jvmkill"
 name    = "JVMKill Agent"
 version = "1.16.0"

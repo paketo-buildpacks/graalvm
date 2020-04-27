@@ -27,7 +27,7 @@ uri() {
 }
 
 version() {
-  if [[ "${DEPENDENCY}" == "jdk" ]]; then
+  if [[ "${DEPENDENCY}" == "jdk" || "${DEPENDENCY}" == "native-image-svm" ]]; then
     local PATTERN='JAVA_VERSION="([0-9]+)\.?([0-9]*)\.?([0-9]*)_?([0-9]+)?"'
 
     if [[ $(tar xOz --wildcards --no-recursion -f "${ROOT}"/dependency/graalvm-ce-java*-linux-amd64-*.tar.gz 'graalvm-ce-java*/release' | grep JAVA_VERSION) =~ ${PATTERN} ]]; then
