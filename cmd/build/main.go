@@ -16,5 +16,14 @@
 
 package main
 
+import (
+	"os"
+
+	"github.com/paketo-buildpacks/libjvm"
+	"github.com/paketo-buildpacks/libpak"
+	"github.com/paketo-buildpacks/libpak/bard"
+)
+
 func main() {
+	libpak.Build(libjvm.Build{Logger: bard.NewLogger(os.Stdout)})
 }

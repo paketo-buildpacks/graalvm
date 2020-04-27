@@ -16,5 +16,11 @@
 
 package main
 
+import (
+	"github.com/buildpacks/libcnb"
+	"github.com/paketo-buildpacks/libjvm"
+)
+
 func main() {
+	libcnb.Detect(libjvm.Detect{})
 }
