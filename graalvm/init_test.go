@@ -14,16 +14,17 @@
  * limitations under the License.
  */
 
-package main
+package graalvm_test
 
 import (
-	"os"
+	"testing"
 
-	"github.com/paketo-buildpacks/graalvm/graalvm"
-	"github.com/paketo-buildpacks/libpak"
-	"github.com/paketo-buildpacks/libpak/bard"
+	"github.com/sclevine/spec"
+	"github.com/sclevine/spec/report"
 )
 
-func main() {
-	libpak.Build(graalvm.Build{Logger: bard.NewLogger(os.Stdout)})
+func TestUnit(t *testing.T) {
+	suite := spec.New("graalvm", spec.Report(report.Terminal{}))
+	suite("JDK", testJDK)
+	suite.Run(t)
 }

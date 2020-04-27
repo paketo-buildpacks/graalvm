@@ -14,6 +14,8 @@ The buildpack will do the following if a JDK is requested:
 * Contributes a JDK to a layer marked `build` and `cache` with all commands on `$PATH`
 * Contributes `$JAVA_HOME` configured to the build layer
 * Contributes `$JDK_HOME` configure to the build layer
+* If `metadata.native-image = true`
+  * Installs the Native Image Substrate VM into the JDK
 
 The buildpack will do the following if a JRE is requested:
 
