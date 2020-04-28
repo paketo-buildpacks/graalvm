@@ -16,6 +16,7 @@ The buildpack will do the following if a JDK is requested:
 * Contributes `$JDK_HOME` configure to the build layer
 * If `metadata.native-image = true`
   * Installs the Native Image Substrate VM into the JDK
+  * Prevents the JRE from being installed, even if requested
 
 The buildpack will do the following if a JRE is requested:
 
