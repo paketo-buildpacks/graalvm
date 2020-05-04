@@ -60,7 +60,10 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 		v = s
 	}
 
+	metadata := map[string]interface{}{}
+	var version string
 	var nativeImage bool
+
 	if j, ok, err := pr.Resolve("jdk"); err != nil {
 		return libcnb.BuildResult{}, fmt.Errorf("unable to resolve jdk plan entry\n%w", err)
 	} else if ok {
@@ -81,6 +84,9 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 		jdk := NewJDK(jdkDependency, nativeImageDependency, dc, result.Plan)
 		jdk.Logger = b.Logger
 		result.Layers = append(result.Layers, jdk)
+
+		metadata["build"] = true
+		version = jdkDependency.Version
 	}
 
 	if e, ok, err := pr.Resolve("jre"); err != nil {
@@ -103,19 +109,6 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 		jre.Logger = b.Logger
 		result.Layers = append(result.Layers, jre)
 
-		depJVMKill, err := dr.Resolve("jvmkill", "")
-		if err != nil {
-			return libcnb.BuildResult{}, fmt.Errorf("unable to find dependency\n%w", err)
-		}
-
-		jk := libjvm.NewJVMKill(depJVMKill, dc, e.Metadata, result.Plan)
-		jk.Logger = b.Logger
-		result.Layers = append(result.Layers, jk)
-
-		lld := libjvm.NewLinkLocalDNS(context.Buildpack, e.Metadata, result.Plan)
-		lld.Logger = b.Logger
-		result.Layers = append(result.Layers, lld)
-
 		depMemCalc, err := dr.Resolve("memory-calculator", "")
 		if err != nil {
 			return libcnb.BuildResult{}, fmt.Errorf("unable to find dependency\n%w", err)
@@ -129,11 +122,34 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 		cc.Logger = b.Logger
 		result.Layers = append(result.Layers, cc)
 
-		jsp := libjvm.NewJavaSecurityProperties(context.Buildpack.Info, e.Metadata)
+		if libjvm.IsBuildContribution(e.Metadata) {
+			metadata["build"] = true
+		}
+		if libjvm.IsLaunchContribution(e.Metadata) {
+			metadata["launch"] = true
+		}
+		version = depJRE.Version
+	}
+
+	if !nativeImage && (libjvm.IsBuildContribution(metadata) || libjvm.IsLaunchContribution(metadata)) {
+		depJVMKill, err := dr.Resolve("jvmkill", "")
+		if err != nil {
+			return libcnb.BuildResult{}, fmt.Errorf("unable to find dependency\n%w", err)
+		}
+
+		jk := libjvm.NewJVMKill(depJVMKill, dc, metadata, result.Plan)
+		jk.Logger = b.Logger
+		result.Layers = append(result.Layers, jk)
+
+		lld := libjvm.NewLinkLocalDNS(context.Buildpack, metadata, result.Plan)
+		lld.Logger = b.Logger
+		result.Layers = append(result.Layers, lld)
+
+		jsp := libjvm.NewJavaSecurityProperties(context.Buildpack.Info, metadata)
 		jsp.Logger = b.Logger
 		result.Layers = append(result.Layers, jsp)
 
-		spc := libjvm.NewSecurityProvidersConfigurer(context.Buildpack, depJRE.Version, e.Metadata, result.Plan)
+		spc := libjvm.NewSecurityProvidersConfigurer(context.Buildpack, version, metadata, result.Plan)
 		spc.Logger = b.Logger
 		result.Layers = append(result.Layers, spc)
 
@@ -142,7 +158,7 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 			return libcnb.BuildResult{}, fmt.Errorf("unable to find dependency\n%w", err)
 		}
 
-		osp := libjvm.NewOpenSSLSecurityProvider(depOpenSSLSecProv, dc, e.Metadata, result.Plan)
+		osp := libjvm.NewOpenSSLSecurityProvider(depOpenSSLSecProv, dc, metadata, result.Plan)
 		osp.Logger = b.Logger
 		result.Layers = append(result.Layers, osp)
 	}
