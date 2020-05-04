@@ -73,6 +73,11 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 					"version": "1.1.1",
 					"stacks":  []interface{}{"test-stack-id"},
 				},
+				{
+					"id":      "openssl-security-provider",
+					"version": "1.1.1",
+					"stacks":  []interface{}{"test-stack-id"},
+				},
 			},
 		}
 		ctx.StackID = "test-stack-id"
@@ -80,7 +85,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		result, err := graalvm.Build{}.Build(ctx)
 		Expect(err).NotTo(HaveOccurred())
 
-		Expect(result.Layers).To(HaveLen(7))
+		Expect(result.Layers).To(HaveLen(8))
 		Expect(result.Layers[0].Name()).To(Equal("jre"))
 		Expect(result.Layers[1].Name()).To(Equal("jvmkill"))
 		Expect(result.Layers[2].Name()).To(Equal("link-local-dns"))
@@ -88,6 +93,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		Expect(result.Layers[4].Name()).To(Equal("class-counter"))
 		Expect(result.Layers[5].Name()).To(Equal("java-security-properties"))
 		Expect(result.Layers[6].Name()).To(Equal("security-providers-configurer"))
+		Expect(result.Layers[7].Name()).To(Equal("openssl-security-provider"))
 	})
 
 	it("contributes JDK when no JRE", func() {
@@ -106,6 +112,11 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 				},
 				{
 					"id":      "memory-calculator",
+					"version": "1.1.1",
+					"stacks":  []interface{}{"test-stack-id"},
+				},
+				{
+					"id":      "openssl-security-provider",
 					"version": "1.1.1",
 					"stacks":  []interface{}{"test-stack-id"},
 				},
@@ -163,6 +174,11 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 					},
 					{
 						"id":      "memory-calculator",
+						"version": "1.1.1",
+						"stacks":  []interface{}{"test-stack-id"},
+					},
+					{
+						"id":      "openssl-security-provider",
 						"version": "1.1.1",
 						"stacks":  []interface{}{"test-stack-id"},
 					},

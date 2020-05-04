@@ -108,11 +108,11 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 			return libcnb.BuildResult{}, fmt.Errorf("unable to find dependency\n%w", err)
 		}
 
-		jk := libjvm.NewJVMKill(depJVMKill, dc, result.Plan)
+		jk := libjvm.NewJVMKill(depJVMKill, dc, e.Metadata, result.Plan)
 		jk.Logger = b.Logger
 		result.Layers = append(result.Layers, jk)
 
-		lld := libjvm.NewLinkLocalDNS(context.Buildpack, result.Plan)
+		lld := libjvm.NewLinkLocalDNS(context.Buildpack, e.Metadata, result.Plan)
 		lld.Logger = b.Logger
 		result.Layers = append(result.Layers, lld)
 
@@ -129,13 +129,22 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 		cc.Logger = b.Logger
 		result.Layers = append(result.Layers, cc)
 
-		jsp := libjvm.NewJavaSecurityProperties(context.Buildpack.Info)
+		jsp := libjvm.NewJavaSecurityProperties(context.Buildpack.Info, e.Metadata)
 		jsp.Logger = b.Logger
 		result.Layers = append(result.Layers, jsp)
 
-		spc := libjvm.NewSecurityProvidersConfigurer(context.Buildpack, depJRE.Version, result.Plan)
+		spc := libjvm.NewSecurityProvidersConfigurer(context.Buildpack, depJRE.Version, e.Metadata, result.Plan)
 		spc.Logger = b.Logger
 		result.Layers = append(result.Layers, spc)
+
+		depOpenSSLSecProv, err := dr.Resolve("openssl-security-provider", "")
+		if err != nil {
+			return libcnb.BuildResult{}, fmt.Errorf("unable to find dependency\n%w", err)
+		}
+
+		osp := libjvm.NewOpenSSLSecurityProvider(depOpenSSLSecProv, dc, e.Metadata, result.Plan)
+		osp.Logger = b.Logger
+		result.Layers = append(result.Layers, osp)
 	}
 
 	return result, nil
