@@ -3,7 +3,7 @@ module github.com/paketo-buildpacks/graalvm
 go 1.14
 
 require (
-	github.com/buildpacks/libcnb v1.9.0
+	github.com/buildpacks/libcnb v1.10.0
 	github.com/heroku/color v0.0.6
 	github.com/mitchellh/mapstructure v1.3.0 // indirect
 	github.com/onsi/gomega v1.9.0
