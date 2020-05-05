@@ -17,10 +17,17 @@
 package main
 
 import (
-	"github.com/buildpacks/libcnb"
+	"os"
+
+	"github.com/paketo-buildpacks/graalvm/graalvm"
 	"github.com/paketo-buildpacks/libjvm"
+	"github.com/paketo-buildpacks/libpak"
+	"github.com/paketo-buildpacks/libpak/bard"
 )
 
 func main() {
-	libcnb.Detect(libjvm.Detect{})
+	libpak.Main(
+		libjvm.Detect{},
+		graalvm.Build{Logger: bard.NewLogger(os.Stdout)},
+	)
 }
