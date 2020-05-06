@@ -1,0 +1,3 @@
+version = "11.0.0"
+uri = "https://localhost/stub-jdk.tar.gz"
+sha256 = "00abd23ea484b935aa7565a0bbc1b6d56b4875a80f6a5b3b4d36ff7b3ac01a1c"

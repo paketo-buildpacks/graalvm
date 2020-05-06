@@ -17,11 +17,16 @@
 package graalvm
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"fmt"
+	"io"
+	"os"
 	"path/filepath"
 
 	"github.com/buildpacks/libcnb"
 	"github.com/heroku/color"
+	"github.com/paketo-buildpacks/libjvm"
 	"github.com/paketo-buildpacks/libpak"
 	"github.com/paketo-buildpacks/libpak/bard"
 	"github.com/paketo-buildpacks/libpak/crush"
@@ -29,6 +34,7 @@ import (
 )
 
 type JDK struct {
+	Certificates          string
 	DependencyCache       libpak.DependencyCache
 	Executor              effect.Executor
 	JDKDependency         libpak.BuildpackDependency
@@ -37,30 +43,40 @@ type JDK struct {
 	NativeImageDependency *libpak.BuildpackDependency
 }
 
-type Metadata struct {
-	Dependencies []libpak.BuildpackDependency `mapstructure:"dependencies"`
-}
-
 func NewJDK(jdkDependency libpak.BuildpackDependency, nativeImageDependency *libpak.BuildpackDependency,
-	cache libpak.DependencyCache, plan *libcnb.BuildpackPlan) JDK {
+	cache libpak.DependencyCache, certificates string, plan *libcnb.BuildpackPlan) (JDK, error) {
 
-	expected := Metadata{Dependencies: []libpak.BuildpackDependency{jdkDependency}}
-
+	dependencies := []libpak.BuildpackDependency{jdkDependency}
 	plan.Entries = append(plan.Entries, jdkDependency.AsBuildpackPlanEntry())
 
 	if nativeImageDependency != nil {
-		expected.Dependencies = append(expected.Dependencies, *nativeImageDependency)
-
+		dependencies = append(dependencies, *nativeImageDependency)
 		plan.Entries = append(plan.Entries, nativeImageDependency.AsBuildpackPlanEntry())
 	}
 
+	expected := map[string]interface{}{"dependencies": dependencies}
+
+	in, err := os.Open(certificates)
+	if err != nil && !os.IsNotExist(err) {
+		return JDK{}, fmt.Errorf("unable to open file %s\n%w", certificates, err)
+	} else if err == nil {
+		defer in.Close()
+
+		s := sha256.New()
+		if _, err := io.Copy(s, in); err != nil {
+			return JDK{}, fmt.Errorf("unable to hash file %s\n%w", certificates, err)
+		}
+		expected["cacerts-sha256"] = hex.EncodeToString(s.Sum(nil))
+	}
+
 	return JDK{
+		Certificates:          certificates,
 		DependencyCache:       cache,
 		Executor:              effect.NewExecutor(),
 		JDKDependency:         jdkDependency,
-		LayerContributor:      libpak.NewLayerContributor(fmt.Sprintf("%s %s", jdkDependency.Name, jdkDependency.Version), expected),
+		LayerContributor:      libpak.NewLayerContributor(bard.FormatIdentity(jdkDependency.Name, jdkDependency.Version), expected),
 		NativeImageDependency: nativeImageDependency,
-	}
+	}, nil
 }
 
 func (j JDK) Contribute(layer libcnb.Layer) (libcnb.Layer, error) {
@@ -80,6 +96,25 @@ func (j JDK) Contribute(layer libcnb.Layer) (libcnb.Layer, error) {
 
 		layer.BuildEnvironment.Override("JAVA_HOME", layer.Path)
 		layer.BuildEnvironment.Override("JDK_HOME", layer.Path)
+
+		var destination string
+		if libjvm.IsBeforeJava9(j.JDKDependency.Version) {
+			destination = filepath.Join(layer.Path, "jre", "lib", "security", "cacerts")
+		} else {
+			destination = filepath.Join(layer.Path, "lib", "security", "cacerts")
+		}
+
+		c := libjvm.CertificateLoader{
+			KeyTool:         filepath.Join(layer.Path, "bin", "keytool"),
+			SourcePath:      j.Certificates,
+			DestinationPath: destination,
+			Executor:        j.Executor,
+			Logger:          j.Logger,
+		}
+
+		if err := c.Load(); err != nil {
+			return libcnb.Layer{}, fmt.Errorf("unable to load certificates\n%w", err)
+		}
 
 		if j.NativeImageDependency != nil {
 			j.Logger.Header(color.BlueString("%s %s", j.NativeImageDependency.Name, j.NativeImageDependency.Version))
