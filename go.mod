@@ -7,6 +7,6 @@ require (
 	github.com/heroku/color v0.0.6
 	github.com/onsi/gomega v1.9.0
 	github.com/paketo-buildpacks/libjvm v1.11.1
-	github.com/paketo-buildpacks/libpak v1.29.0
+	github.com/paketo-buildpacks/libpak v1.30.0
 	github.com/sclevine/spec v1.4.0
 )
