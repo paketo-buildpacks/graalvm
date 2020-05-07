@@ -6,8 +6,8 @@ require (
 	github.com/buildpacks/libcnb v1.10.0
 	github.com/heroku/color v0.0.6
 	github.com/onsi/gomega v1.10.0
-	github.com/paketo-buildpacks/libjvm v1.12.0
-	github.com/paketo-buildpacks/libpak v1.30.0
+	github.com/paketo-buildpacks/libjvm v1.13.0
+	github.com/paketo-buildpacks/libpak v1.31.2
 	github.com/sclevine/spec v1.4.0
 	github.com/stretchr/testify v1.5.1
 )

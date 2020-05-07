@@ -131,16 +131,16 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		Expect(result.Layers[0].(libjvm.JRE).LayerContributor.Dependency.ID).To(Equal("jdk"))
 	})
 
-	context("$BP_JAVA_VERSION", func() {
+	context("$BP_JVM_VERSION", func() {
 		it.Before(func() {
-			Expect(os.Setenv("BP_JAVA_VERSION", "1.1.1")).To(Succeed())
+			Expect(os.Setenv("BP_JVM_VERSION", "1.1.1")).To(Succeed())
 		})
 
 		it.After(func() {
-			Expect(os.Unsetenv("BP_JAVA_VERSION")).To(Succeed())
+			Expect(os.Unsetenv("BP_JVM_VERSION")).To(Succeed())
 		})
 
-		it("selects versions based on BP_JAVA_VERSION", func() {
+		it("selects versions based on BP_JVM_VERSION", func() {
 			ctx.Plan.Entries = append(ctx.Plan.Entries,
 				libcnb.BuildpackPlanEntry{Name: "jdk"},
 				libcnb.BuildpackPlanEntry{Name: "jre"},

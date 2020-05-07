@@ -18,7 +18,6 @@ package graalvm
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/buildpacks/libcnb"
 	"github.com/heroku/color"
@@ -33,19 +32,14 @@ type Build struct {
 
 func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 	b.Logger.Title(context.Buildpack)
-	b.Logger.Body(bard.FormatUserConfig("BP_JAVA_VERSION", "the Java version", "11.*"))
-	b.Logger.Body(bard.FormatUserConfig("BPL_HEAD_ROOM", "the headroom in memory calculation", "0"))
-	b.Logger.Body(bard.FormatUserConfig("BPL_LOADED_CLASS_COUNT", "the number of loaded classes in memory calculation", "35% of classes"))
-	b.Logger.Body(bard.FormatUserConfig("BPL_THREAD_COUNT", "the number of threads in memory calculation", "250"))
-
 	result := libcnb.NewBuildResult()
 
-	pr := libpak.PlanEntryResolver{Plan: context.Plan}
-
-	md, err := libpak.NewBuildpackMetadata(context.Buildpack.Metadata)
+	cr, err := libpak.NewConfigurationResolver(context.Buildpack, &b.Logger)
 	if err != nil {
-		return libcnb.BuildResult{}, fmt.Errorf("unable to unmarshal buildpack metadata\n%w", err)
+		return libcnb.BuildResult{}, fmt.Errorf("unable to create configuration resolver\n%w", err)
 	}
+
+	pr := libpak.PlanEntryResolver{Plan: context.Plan}
 
 	dr, err := libpak.NewDependencyResolver(context)
 	if err != nil {
@@ -55,11 +49,7 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 	dc := libpak.NewDependencyCache(context.Buildpack)
 	dc.Logger = b.Logger
 
-	v := md.DefaultVersions["java"]
-	if s, ok := os.LookupEnv("BP_JAVA_VERSION"); ok {
-		v = s
-	}
-
+	v, _ := cr.Resolve("BP_JVM_VERSION")
 	var nativeImage bool
 
 	if j, ok, err := pr.Resolve("jdk"); err != nil {
