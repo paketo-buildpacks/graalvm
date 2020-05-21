@@ -97,19 +97,18 @@ func (j JDK) Contribute(layer libcnb.Layer) (libcnb.Layer, error) {
 		layer.BuildEnvironment.Override("JAVA_HOME", layer.Path)
 		layer.BuildEnvironment.Override("JDK_HOME", layer.Path)
 
-		var destination string
+		var keyStorePath string
 		if libjvm.IsBeforeJava9(j.JDKDependency.Version) {
-			destination = filepath.Join(layer.Path, "jre", "lib", "security", "cacerts")
+			keyStorePath = filepath.Join(layer.Path, "jre", "lib", "security", "cacerts")
 		} else {
-			destination = filepath.Join(layer.Path, "lib", "security", "cacerts")
+			keyStorePath = filepath.Join(layer.Path, "lib", "security", "cacerts")
 		}
 
 		c := libjvm.CertificateLoader{
-			KeyTool:         filepath.Join(layer.Path, "bin", "keytool"),
-			SourcePath:      j.Certificates,
-			DestinationPath: destination,
-			Executor:        j.Executor,
-			Logger:          j.Logger,
+			CACertificatesPath: j.Certificates,
+			KeyStorePath:       keyStorePath,
+			KeyStorePassword:   []byte("changeit"),
+			Logger:             j.Logger.BodyWriter(),
 		}
 
 		if err := c.Load(); err != nil {
