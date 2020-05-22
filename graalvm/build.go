@@ -135,14 +135,9 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 			spc.Logger = b.Logger
 			result.Layers = append(result.Layers, spc)
 
-			depOpenSSLSecProv, err := dr.Resolve("openssl-security-provider", "")
-			if err != nil {
-				return libcnb.BuildResult{}, fmt.Errorf("unable to find dependency\n%w", err)
-			}
-
-			osp := libjvm.NewOpenSSLSecurityProvider(depOpenSSLSecProv, dc, result.Plan)
-			osp.Logger = b.Logger
-			result.Layers = append(result.Layers, osp)
+			osl := libjvm.NewOpenSSLCertificateLoader(context.Buildpack, dt, depJRE.Version, result.Plan)
+			osl.Logger = b.Logger
+			result.Layers = append(result.Layers, osl)
 		}
 	}
 
