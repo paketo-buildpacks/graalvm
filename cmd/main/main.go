@@ -19,10 +19,11 @@ package main
 import (
 	"os"
 
-	"github.com/paketo-buildpacks/graalvm/graalvm"
 	"github.com/paketo-buildpacks/libjvm"
 	"github.com/paketo-buildpacks/libpak"
 	"github.com/paketo-buildpacks/libpak/bard"
+
+	"github.com/paketo-buildpacks/graalvm/graalvm"
 )
 
 func main() {

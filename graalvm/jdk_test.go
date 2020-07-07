@@ -24,7 +24,6 @@ import (
 
 	"github.com/buildpacks/libcnb"
 	. "github.com/onsi/gomega"
-	"github.com/paketo-buildpacks/graalvm/graalvm"
 	"github.com/paketo-buildpacks/libjvm"
 	"github.com/paketo-buildpacks/libpak"
 	"github.com/paketo-buildpacks/libpak/bard"
@@ -33,6 +32,8 @@ import (
 	"github.com/pavel-v-chernykh/keystore-go"
 	"github.com/sclevine/spec"
 	"github.com/stretchr/testify/mock"
+
+	"github.com/paketo-buildpacks/graalvm/graalvm"
 )
 
 func testJDK(t *testing.T, context spec.G, it spec.S) {
