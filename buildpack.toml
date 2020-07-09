@@ -24,6 +24,9 @@ homepage = "https://github.com/paketo-buildpacks/graalvm"
 id = "io.buildpacks.stacks.bionic"
 
 [[stacks]]
+id = "io.paketo.stacks.tiny"
+
+[[stacks]]
 id = "org.cloudfoundry.stacks.cflinuxfs3"
 
 [[metadata.configurations]]
