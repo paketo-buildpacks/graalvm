@@ -5,7 +5,6 @@ go 1.14
 require (
 	github.com/buildpacks/libcnb v1.15.2
 	github.com/heroku/color v0.0.6
-	github.com/imdario/mergo v0.3.10 // indirect
 	github.com/onsi/gomega v1.10.1
 	github.com/paketo-buildpacks/libjvm v1.17.0
 	github.com/paketo-buildpacks/libpak v1.39.0
