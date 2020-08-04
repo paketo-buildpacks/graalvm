@@ -94,7 +94,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		Expect(result.Layers[4].Name()).To(Equal("link-local-dns"))
 		Expect(result.Layers[5].Name()).To(Equal("java-security-properties"))
 		Expect(result.Layers[6].Name()).To(Equal("security-providers-configurer"))
-		Expect(result.Layers[7].Name()).To(Equal("openssl-security-provider"))
+		Expect(result.Layers[7].Name()).To(Equal("openssl-certificate-loader"))
 	})
 
 	it("contributes JDK when no JRE", func() {
@@ -128,7 +128,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		result, err := graalvm.Build{}.Build(ctx)
 		Expect(err).NotTo(HaveOccurred())
 
-		Expect(result.Layers[0].Name()).To(Equal("jre"))
+		Expect(result.Layers[0].Name()).To(Equal("jdk"))
 		Expect(result.Layers[0].(libjvm.JRE).LayerContributor.Dependency.ID).To(Equal("jdk"))
 	})
 
