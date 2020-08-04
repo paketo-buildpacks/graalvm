@@ -47,11 +47,9 @@ func NewJDK(jdkDependency libpak.BuildpackDependency, nativeImageDependency *lib
 	cache libpak.DependencyCache, certificates string, plan *libcnb.BuildpackPlan) (JDK, error) {
 
 	dependencies := []libpak.BuildpackDependency{jdkDependency}
-	plan.Entries = append(plan.Entries, jdkDependency.AsBuildpackPlanEntry())
 
 	if nativeImageDependency != nil {
 		dependencies = append(dependencies, *nativeImageDependency)
-		plan.Entries = append(plan.Entries, nativeImageDependency.AsBuildpackPlanEntry())
 	}
 
 	expected := map[string]interface{}{"dependencies": dependencies}
@@ -69,14 +67,26 @@ func NewJDK(jdkDependency libpak.BuildpackDependency, nativeImageDependency *lib
 		expected["cacerts-sha256"] = hex.EncodeToString(s.Sum(nil))
 	}
 
-	return JDK{
+	j := JDK{
 		Certificates:          certificates,
 		DependencyCache:       cache,
 		Executor:              effect.NewExecutor(),
 		JDKDependency:         jdkDependency,
 		LayerContributor:      libpak.NewLayerContributor(bard.FormatIdentity(jdkDependency.Name, jdkDependency.Version), expected),
 		NativeImageDependency: nativeImageDependency,
-	}, nil
+	}
+
+	entry := jdkDependency.AsBuildpackPlanEntry()
+	entry.Metadata["layer"] = j.Name()
+	plan.Entries = append(plan.Entries, entry)
+
+	if nativeImageDependency != nil {
+		entry := nativeImageDependency.AsBuildpackPlanEntry()
+		entry.Metadata["layer"] = j.Name()
+		plan.Entries = append(plan.Entries, entry)
+	}
+
+	return j, nil
 }
 
 func (j JDK) Contribute(layer libcnb.Layer) (libcnb.Layer, error) {
