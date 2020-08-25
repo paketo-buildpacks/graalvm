@@ -147,10 +147,8 @@ func (j JDK) Contribute(layer libcnb.Layer) (libcnb.Layer, error) {
 			}
 		}
 
-		layer.Build = true
-		layer.Cache = true
 		return layer, nil
-	})
+	}, libpak.BuildLayer, libpak.CacheLayer)
 }
 
 func (JDK) Name() string {
