@@ -61,7 +61,7 @@ func testJDK(t *testing.T, context spec.G, it spec.S) {
 		dep := libpak.BuildpackDependency{
 			Version: "11.0.0",
 			URI:     "https://localhost/stub-jdk-11.tar.gz",
-			SHA256:  "0bdf99b069660cf63f33d26edf11cc1aea5aba9126ca06a86b8f1cfd610352b1",
+			SHA256:  "e40a6ddb7d74d78a6d5557380160a174b1273813db1caf9b1f7bcbfe1578e818",
 		}
 		dc := libpak.DependencyCache{CachePath: "testdata"}
 
@@ -91,7 +91,7 @@ func testJDK(t *testing.T, context spec.G, it spec.S) {
 		jdkDep := libpak.BuildpackDependency{
 			Version: "11.0.0",
 			URI:     "https://localhost/stub-jdk-11.tar.gz",
-			SHA256:  "0bdf99b069660cf63f33d26edf11cc1aea5aba9126ca06a86b8f1cfd610352b1",
+			SHA256:  "e40a6ddb7d74d78a6d5557380160a174b1273813db1caf9b1f7bcbfe1578e818",
 		}
 		niDep := &libpak.BuildpackDependency{
 			URI:    "https://localhost/stub-native-image.jar",
@@ -120,7 +120,7 @@ func testJDK(t *testing.T, context spec.G, it spec.S) {
 		dep := libpak.BuildpackDependency{
 			Version: "8.0.0",
 			URI:     "https://localhost/stub-jdk-8.tar.gz",
-			SHA256:  "c16f4c171399b7cdfd7ad83e76934eef8e1776578e803b82164956d68a0f3aa7",
+			SHA256:  "6860fb9a9a66817ec285fac64c342b678b0810656b1f2413f063911a8bde6447",
 		}
 		dc := libpak.DependencyCache{CachePath: "testdata"}
 
@@ -148,7 +148,7 @@ func testJDK(t *testing.T, context spec.G, it spec.S) {
 		dep := libpak.BuildpackDependency{
 			Version: "11.0.0",
 			URI:     "https://localhost/stub-jdk-11.tar.gz",
-			SHA256:  "0bdf99b069660cf63f33d26edf11cc1aea5aba9126ca06a86b8f1cfd610352b1",
+			SHA256:  "e40a6ddb7d74d78a6d5557380160a174b1273813db1caf9b1f7bcbfe1578e818",
 		}
 		dc := libpak.DependencyCache{CachePath: "testdata"}
 

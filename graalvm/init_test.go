@@ -23,6 +23,12 @@ import (
 	"github.com/sclevine/spec/report"
 )
 
+var (
+	BuildContribution  = map[string]interface{}{"build": true}
+	LaunchContribution = map[string]interface{}{"launch": true}
+	NoContribution     = map[string]interface{}{}
+)
+
 func TestUnit(t *testing.T) {
 	suite := spec.New("graalvm", spec.Report(report.Terminal{}))
 	suite("Build", testBuild)
