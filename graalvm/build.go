@@ -99,23 +99,27 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 			return libcnb.BuildResult{}, fmt.Errorf("unable to find dependency\n%w", err)
 		}
 
-		jre := libjvm.NewJRE(depJRE, dc, e.Metadata, result.Plan)
+		jre, err := libjvm.NewJRE(context.Application.Path, depJRE, dc, dt, libjvm.CACertificates, e.Metadata, result.Plan)
+		if err != nil {
+			return libcnb.BuildResult{}, fmt.Errorf("unable to create jre\n%w", err)
+		}
+
 		jre.Logger = b.Logger
 		result.Layers = append(result.Layers, jre)
 
 		if libjvm.IsLaunchContribution(e.Metadata) {
-			depMemCalc, err := dr.Resolve("memory-calculator", "")
-			if err != nil {
-				return libcnb.BuildResult{}, fmt.Errorf("unable to find dependency\n%w", err)
+			helpers := []string{"active-processor-count", "java-opts", "link-local-dns", "memory-calculator",
+				"openssl-certificate-loader", "security-providers-configurer"}
+
+			if libjvm.IsBeforeJava9(depJRE.Version) {
+				helpers = append(helpers, "security-providers-classpath-8")
+			} else {
+				helpers = append(helpers, "security-providers-classpath-9")
 			}
 
-			mc := libjvm.NewMemoryCalculator(context.Application.Path, depMemCalc, dc, depJRE.Version, result.Plan)
-			mc.Logger = b.Logger
-			result.Layers = append(result.Layers, mc)
-
-			cc := libjvm.NewClassCounter(context.Buildpack, result.Plan)
-			cc.Logger = b.Logger
-			result.Layers = append(result.Layers, cc)
+			h := libpak.NewHelperLayerContributor(context.Buildpack, result.Plan, helpers...)
+			h.Logger = b.Logger
+			result.Layers = append(result.Layers, h)
 
 			depJVMKill, err := dr.Resolve("jvmkill", "")
 			if err != nil {
@@ -126,21 +130,9 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 			jk.Logger = b.Logger
 			result.Layers = append(result.Layers, jk)
 
-			lld := libjvm.NewLinkLocalDNS(context.Buildpack, result.Plan)
-			lld.Logger = b.Logger
-			result.Layers = append(result.Layers, lld)
-
 			jsp := libjvm.NewJavaSecurityProperties(context.Buildpack.Info)
 			jsp.Logger = b.Logger
 			result.Layers = append(result.Layers, jsp)
-
-			spc := libjvm.NewSecurityProvidersConfigurer(context.Buildpack, dt, depJRE.Version, result.Plan)
-			spc.Logger = b.Logger
-			result.Layers = append(result.Layers, spc)
-
-			osl := libjvm.NewOpenSSLCertificateLoader(context.Buildpack, dt, depJRE.Version, result.Plan)
-			osl.Logger = b.Logger
-			result.Layers = append(result.Layers, osl)
 		}
 	}
 
