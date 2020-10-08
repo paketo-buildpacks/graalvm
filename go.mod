@@ -11,5 +11,4 @@ require (
 	github.com/pavel-v-chernykh/keystore-go v2.1.0+incompatible
 	github.com/sclevine/spec v1.4.0
 	github.com/stretchr/testify v1.6.1
-	golang.org/x/sys v0.0.0-20200915084602-288bc346aa39 // indirect
 )
