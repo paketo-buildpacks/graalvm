@@ -40,13 +40,11 @@ jobs:
               env:
                 YJ_VERSION: 5.0.0
             - id: dependency
-              uses: docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
+              uses: docker://ghcr.io/paketo-buildpacks/actions/graalvm-dependency:main
               with:
                 glob: native-image-installable-svm-java11-linux-amd64-.+.jar
-                owner: graalvm
-                repository: graalvm-ce-builds
-                tag_filter: vm-(.*)
                 token: ${{ secrets.GITHUB_TOKEN }}
+                version: 11
             - id: buildpack
               name: Update Buildpack Dependency
               run: |
