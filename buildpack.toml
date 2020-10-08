@@ -85,9 +85,9 @@ stacks  = [ "io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "org.cloudfo
 [[metadata.dependencies]]
 id      = "jdk"
 name    = "GraalVM JDK"
-version = "11.0.0"
-uri     = "placeholder"
-sha256  = "placeholder"
+version = "11.0.8"
+uri     = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.2.0/graalvm-ce-java11-linux-amd64-20.2.0.tar.gz"
+sha256  = "5db74b5b8888712d2ac3cd7ae2a8361c2aa801bc94c801f5839351aba5064e29"
 stacks  = [ "io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "org.cloudfoundry.stacks.cflinuxfs3" ]
 
   [[metadata.dependencies.licenses]]
