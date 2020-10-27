@@ -17,11 +17,7 @@
 package graalvm
 
 import (
-	"crypto/sha256"
-	"encoding/hex"
 	"fmt"
-	"io"
-	"os"
 	"path/filepath"
 
 	"github.com/buildpacks/libcnb"
@@ -34,7 +30,7 @@ import (
 )
 
 type JDK struct {
-	Certificates          string
+	CertificateLoader     libjvm.CertificateLoader
 	DependencyCache       libpak.DependencyCache
 	Executor              effect.Executor
 	JDKDependency         libpak.BuildpackDependency
@@ -44,7 +40,7 @@ type JDK struct {
 }
 
 func NewJDK(jdkDependency libpak.BuildpackDependency, nativeImageDependency *libpak.BuildpackDependency,
-	cache libpak.DependencyCache, certificates string, plan *libcnb.BuildpackPlan) (JDK, error) {
+	cache libpak.DependencyCache, certificateLoader libjvm.CertificateLoader, plan *libcnb.BuildpackPlan) (JDK, error) {
 
 	dependencies := []libpak.BuildpackDependency{jdkDependency}
 
@@ -54,21 +50,16 @@ func NewJDK(jdkDependency libpak.BuildpackDependency, nativeImageDependency *lib
 
 	expected := map[string]interface{}{"dependencies": dependencies}
 
-	in, err := os.Open(certificates)
-	if err != nil && !os.IsNotExist(err) {
-		return JDK{}, fmt.Errorf("unable to open file %s\n%w", certificates, err)
-	} else if err == nil {
-		defer in.Close()
-
-		s := sha256.New()
-		if _, err := io.Copy(s, in); err != nil {
-			return JDK{}, fmt.Errorf("unable to hash file %s\n%w", certificates, err)
+	if md, err := certificateLoader.Metadata(); err != nil {
+		return JDK{}, fmt.Errorf("unable to generate certificate loader metadata")
+	} else {
+		for k, v := range md {
+			expected[k] = v
 		}
-		expected["cacerts-sha256"] = hex.EncodeToString(s.Sum(nil))
 	}
 
 	j := JDK{
-		Certificates:          certificates,
+		CertificateLoader:     certificateLoader,
 		DependencyCache:       cache,
 		Executor:              effect.NewExecutor(),
 		JDKDependency:         jdkDependency,
@@ -114,14 +105,7 @@ func (j JDK) Contribute(layer libcnb.Layer) (libcnb.Layer, error) {
 			keyStorePath = filepath.Join(layer.Path, "lib", "security", "cacerts")
 		}
 
-		c := libjvm.CertificateLoader{
-			CACertificatesPath: j.Certificates,
-			KeyStorePath:       keyStorePath,
-			KeyStorePassword:   "changeit",
-			Logger:             j.Logger.BodyWriter(),
-		}
-
-		if err := c.Load(); err != nil {
+		if err := j.CertificateLoader.Load(keyStorePath, "changeit"); err != nil {
 			return libcnb.Layer{}, fmt.Errorf("unable to load certificates\n%w", err)
 		}
 
