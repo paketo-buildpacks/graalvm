@@ -40,6 +40,11 @@ func testJDK(t *testing.T, context spec.G, it spec.S) {
 	var (
 		Expect = NewWithT(t).Expect
 
+		cl = libjvm.CertificateLoader{
+			CertDirs: []string{filepath.Join("testdata", "certificates")},
+			Logger:   ioutil.Discard,
+		}
+
 		ctx      libcnb.BuildContext
 		executor *mocks.Executor
 	)
@@ -65,12 +70,11 @@ func testJDK(t *testing.T, context spec.G, it spec.S) {
 		}
 		dc := libpak.DependencyCache{CachePath: "testdata"}
 
-		j, err := graalvm.NewJDK(dep, nil, dc, filepath.Join("testdata", "test-certificates.crt"), &libcnb.BuildpackPlan{})
+		j, err := graalvm.NewJDK(dep, nil, dc, cl, &libcnb.BuildpackPlan{})
 		Expect(err).NotTo(HaveOccurred())
 		j.Logger = bard.NewLogger(ioutil.Discard)
 
-		Expect(j.LayerContributor.ExpectedMetadata.(map[string]interface{})["cacerts-sha256"]).
-			To(Equal("04846f73d9d0421c60076fd02bad7f0a81a3f11a028d653b0de53290e41dcead"))
+		Expect(j.LayerContributor.ExpectedMetadata.(map[string]interface{})["cert-dir"]).To(HaveLen(4))
 
 		layer, err := ctx.Layers.Layer("test-layer")
 		Expect(err).NotTo(HaveOccurred())
@@ -99,7 +103,7 @@ func testJDK(t *testing.T, context spec.G, it spec.S) {
 		}
 		dc := libpak.DependencyCache{CachePath: "testdata"}
 
-		j, err := graalvm.NewJDK(jdkDep, niDep, dc, filepath.Join("testdata", "test-certificates.crt"), &libcnb.BuildpackPlan{})
+		j, err := graalvm.NewJDK(jdkDep, niDep, dc, cl, &libcnb.BuildpackPlan{})
 		Expect(err).NotTo(HaveOccurred())
 		j.Logger = bard.NewLogger(ioutil.Discard)
 		j.Executor = executor
@@ -124,7 +128,7 @@ func testJDK(t *testing.T, context spec.G, it spec.S) {
 		}
 		dc := libpak.DependencyCache{CachePath: "testdata"}
 
-		j, err := libjvm.NewJDK(dep, dc, filepath.Join("testdata", "test-certificates.crt"), &libcnb.BuildpackPlan{})
+		j, err := libjvm.NewJDK(dep, dc, cl, &libcnb.BuildpackPlan{})
 		Expect(err).NotTo(HaveOccurred())
 		j.Logger = bard.NewLogger(ioutil.Discard)
 
@@ -141,7 +145,7 @@ func testJDK(t *testing.T, context spec.G, it spec.S) {
 		ks, err := keystore.Decode(in, []byte("changeit"))
 		Expect(err).NotTo(HaveOccurred())
 
-		Expect(ks).To(HaveLen(2))
+		Expect(ks).To(HaveLen(3))
 	})
 
 	it("updates after Java 9 certificates", func() {
@@ -152,7 +156,7 @@ func testJDK(t *testing.T, context spec.G, it spec.S) {
 		}
 		dc := libpak.DependencyCache{CachePath: "testdata"}
 
-		j, err := libjvm.NewJDK(dep, dc, filepath.Join("testdata", "test-certificates.crt"), &libcnb.BuildpackPlan{})
+		j, err := libjvm.NewJDK(dep, dc, cl, &libcnb.BuildpackPlan{})
 		Expect(err).NotTo(HaveOccurred())
 		j.Logger = bard.NewLogger(ioutil.Discard)
 
@@ -169,7 +173,7 @@ func testJDK(t *testing.T, context spec.G, it spec.S) {
 		ks, err := keystore.Decode(in, []byte("changeit"))
 		Expect(err).NotTo(HaveOccurred())
 
-		Expect(ks).To(HaveLen(2))
+		Expect(ks).To(HaveLen(3))
 	})
 
 }

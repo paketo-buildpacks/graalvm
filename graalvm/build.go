@@ -52,6 +52,9 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 	}
 	dc.Logger = b.Logger
 
+	cl := libjvm.NewCertificateLoader()
+	cl.Logger = b.Logger.BodyWriter()
+
 	v, _ := cr.Resolve("BP_JVM_VERSION")
 	var nativeImage bool
 
@@ -72,7 +75,7 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 			nativeImageDependency = &dep
 		}
 
-		jdk, err := NewJDK(jdkDependency, nativeImageDependency, dc, libjvm.CACertificates, result.Plan)
+		jdk, err := NewJDK(jdkDependency, nativeImageDependency, dc, cl, result.Plan)
 		if err != nil {
 			return libcnb.BuildResult{}, fmt.Errorf("unable to create jdk\n%w", err)
 		}
@@ -99,7 +102,7 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 			return libcnb.BuildResult{}, fmt.Errorf("unable to find dependency\n%w", err)
 		}
 
-		jre, err := libjvm.NewJRE(context.Application.Path, depJRE, dc, dt, libjvm.CACertificates, e.Metadata, result.Plan)
+		jre, err := libjvm.NewJRE(context.Application.Path, depJRE, dc, dt, cl, e.Metadata, result.Plan)
 		if err != nil {
 			return libcnb.BuildResult{}, fmt.Errorf("unable to create jre\n%w", err)
 		}
