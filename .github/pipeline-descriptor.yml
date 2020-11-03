@@ -1,3 +1,5 @@
+github_token: ${{ secrets.JAVA_GITHUB_TOKEN }}
+
 codeowners:
 - path:  "*"
   owner: "@paketo-buildpacks/java-buildpacks"
@@ -19,7 +21,7 @@ dependencies:
   uses:            docker://ghcr.io/paketo-buildpacks/actions/graalvm-dependency:main
   with:
     glob:    graalvm-ce-java8-linux-amd64-.+.tar.gz
-    token:   ${{ secrets.GITHUB_TOKEN }}
+    token:   ${{ secrets.JAVA_GITHUB_TOKEN }}
     version: 8
 - name:            Native Image 8
   id:              native-image-svm
@@ -27,7 +29,7 @@ dependencies:
   uses:            docker://ghcr.io/paketo-buildpacks/actions/graalvm-dependency:main
   with:
     glob:    native-image-installable-svm-java8-linux-amd64-.+.jar
-    token:   ${{ secrets.GITHUB_TOKEN }}
+    token:   ${{ secrets.JAVA_GITHUB_TOKEN }}
     version: 8
 - name:            JDK 11
   id:              jdk
@@ -35,7 +37,7 @@ dependencies:
   uses:            docker://ghcr.io/paketo-buildpacks/actions/graalvm-dependency:main
   with:
     glob:    graalvm-ce-java11-linux-amd64-.+.tar.gz
-    token:   ${{ secrets.GITHUB_TOKEN }}
+    token:   ${{ secrets.JAVA_GITHUB_TOKEN }}
     version: 11
 - name:            Native Image 11
   id:              native-image-svm
@@ -43,11 +45,11 @@ dependencies:
   uses:            docker://ghcr.io/paketo-buildpacks/actions/graalvm-dependency:main
   with:
     glob:    native-image-installable-svm-java11-linux-amd64-.+.jar
-    token:   ${{ secrets.GITHUB_TOKEN }}
+    token:   ${{ secrets.JAVA_GITHUB_TOKEN }}
     version: 11
 - id:   jvmkill
   uses: docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
   with:
     owner:      cloudfoundry
     repository: jvmkill
-    token:      ${{ secrets.GITHUB_TOKEN }}
+    token:      ${{ secrets.JAVA_GITHUB_TOKEN }}
