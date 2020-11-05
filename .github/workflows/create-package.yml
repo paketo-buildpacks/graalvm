@@ -166,5 +166,5 @@ jobs:
               with:
                 address: gcr.io/paketo-buildpacks/graalvm@${{ steps.package.outputs.digest }}
                 id: paketo-buildpacks/graalvm
-                token: ${{ secrets.JAVA_BUILDPACK_REGISTRY_TOKEN }}
+                token: ${{ secrets.JAVA_GITHUB_TOKEN }}
                 version: ${{ steps.version.outputs.version }}
