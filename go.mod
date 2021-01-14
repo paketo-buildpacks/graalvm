@@ -10,5 +10,5 @@ require (
 	github.com/paketo-buildpacks/libpak v1.50.0
 	github.com/pavel-v-chernykh/keystore-go v2.1.0+incompatible
 	github.com/sclevine/spec v1.4.0
-	github.com/stretchr/testify v1.6.1
+	github.com/stretchr/testify v1.7.0
 )
