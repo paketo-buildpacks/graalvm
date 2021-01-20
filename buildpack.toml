@@ -97,9 +97,9 @@ stacks  = [ "io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "org.cloudfo
 [[metadata.dependencies]]
 id      = "native-image-svm"
 name    = "GraalVM Native Image Substrate VM"
-version = "11.0.9"
-uri     = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.3.0/native-image-installable-svm-java11-linux-amd64-20.3.0.jar"
-sha256  = "6e67f3c5cc329956fe9bc33d571c2e771eff8f4f541bca275bb62744026d3726"
+version = "11.0.10"
+uri     = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.0.0/native-image-installable-svm-java11-linux-amd64-21.0.0.jar"
+sha256  = "c70b00b4eabcc0140505acab756c394a88be7980634706cce11f53e09658707c"
 stacks  = [ "io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "org.cloudfoundry.stacks.cflinuxfs3" ]
 
   [[metadata.dependencies.licenses]]
