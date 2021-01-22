@@ -61,9 +61,9 @@ launch      = true
 [[metadata.dependencies]]
 id      = "jdk"
 name    = "GraalVM JDK"
-version = "8.0.272"
-uri     = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.3.0/graalvm-ce-java8-linux-amd64-20.3.0.tar.gz"
-sha256  = "455cadf810780161b74da9e23b529426398ce40843603cacbc11edbd2310aba4"
+version = "8.0.282"
+uri     = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.0.0/graalvm-ce-java8-linux-amd64-21.0.0.tar.gz"
+sha256  = "326c5a9ba2f6a6b28023c1fef9c4c6fb6acf9cd87b0fcb6916e0527633bd01a3"
 stacks  = [ "io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "org.cloudfoundry.stacks.cflinuxfs3" ]
 
   [[metadata.dependencies.licenses]]
@@ -97,9 +97,9 @@ stacks  = [ "io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "org.cloudfo
 [[metadata.dependencies]]
 id      = "native-image-svm"
 name    = "GraalVM Native Image Substrate VM"
-version = "11.0.9"
-uri     = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.3.0/native-image-installable-svm-java11-linux-amd64-20.3.0.jar"
-sha256  = "6e67f3c5cc329956fe9bc33d571c2e771eff8f4f541bca275bb62744026d3726"
+version = "11.0.10"
+uri     = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.0.0/native-image-installable-svm-java11-linux-amd64-21.0.0.jar"
+sha256  = "c70b00b4eabcc0140505acab756c394a88be7980634706cce11f53e09658707c"
 stacks  = [ "io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "org.cloudfoundry.stacks.cflinuxfs3" ]
 
   [[metadata.dependencies.licenses]]
