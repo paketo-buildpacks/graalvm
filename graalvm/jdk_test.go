@@ -70,8 +70,14 @@ func testJDK(t *testing.T, context spec.G, it spec.S) {
 		}
 		dc := libpak.DependencyCache{CachePath: "testdata"}
 
-		j, err := graalvm.NewJDK(dep, nil, dc, cl, &libcnb.BuildpackPlan{})
+		j, bomEntries, err := graalvm.NewJDK(dep, nil, dc, cl)
 		Expect(err).NotTo(HaveOccurred())
+
+		Expect(len(bomEntries)).To(Equal(1))
+		Expect(bomEntries[0].Build).To(BeTrue())
+		Expect(bomEntries[0].Launch).To(BeFalse())
+		Expect(bomEntries[0].Metadata["uri"]).To(Equal("https://localhost/stub-jdk-11.tar.gz"))
+
 		j.Logger = bard.NewLogger(ioutil.Discard)
 
 		Expect(j.LayerContributor.ExpectedMetadata.(map[string]interface{})["cert-dir"]).To(HaveLen(4))
@@ -103,7 +109,7 @@ func testJDK(t *testing.T, context spec.G, it spec.S) {
 		}
 		dc := libpak.DependencyCache{CachePath: "testdata"}
 
-		j, err := graalvm.NewJDK(jdkDep, niDep, dc, cl, &libcnb.BuildpackPlan{})
+		j, _, err := graalvm.NewJDK(jdkDep, niDep, dc, cl)
 		Expect(err).NotTo(HaveOccurred())
 		j.Logger = bard.NewLogger(ioutil.Discard)
 		j.Executor = executor
@@ -128,8 +134,9 @@ func testJDK(t *testing.T, context spec.G, it spec.S) {
 		}
 		dc := libpak.DependencyCache{CachePath: "testdata"}
 
-		j, err := libjvm.NewJDK(dep, dc, cl, &libcnb.BuildpackPlan{})
+		j, _, err := graalvm.NewJDK(dep, nil, dc, cl)
 		Expect(err).NotTo(HaveOccurred())
+
 		j.Logger = bard.NewLogger(ioutil.Discard)
 
 		layer, err := ctx.Layers.Layer("test-layer")
@@ -156,8 +163,10 @@ func testJDK(t *testing.T, context spec.G, it spec.S) {
 		}
 		dc := libpak.DependencyCache{CachePath: "testdata"}
 
-		j, err := libjvm.NewJDK(dep, dc, cl, &libcnb.BuildpackPlan{})
+		j, be, err := libjvm.NewJDK(dep, dc, cl)
 		Expect(err).NotTo(HaveOccurred())
+		Expect(be.Build).To(BeTrue())
+
 		j.Logger = bard.NewLogger(ioutil.Discard)
 
 		layer, err := ctx.Layers.Layer("test-layer")

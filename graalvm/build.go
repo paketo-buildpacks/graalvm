@@ -75,13 +75,14 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 			nativeImageDependency = &dep
 		}
 
-		jdk, err := NewJDK(jdkDependency, nativeImageDependency, dc, cl, result.Plan)
+		jdk, be, err := NewJDK(jdkDependency, nativeImageDependency, dc, cl)
 		if err != nil {
 			return libcnb.BuildResult{}, fmt.Errorf("unable to create jdk\n%w", err)
 		}
 
 		jdk.Logger = b.Logger
 		result.Layers = append(result.Layers, jdk)
+		result.BOM.Entries = append(result.BOM.Entries, be...)
 	}
 
 	if e, ok, err := pr.Resolve("jre"); err != nil {
@@ -102,13 +103,14 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 			return libcnb.BuildResult{}, fmt.Errorf("unable to find dependency\n%w", err)
 		}
 
-		jre, err := libjvm.NewJRE(context.Application.Path, depJRE, dc, dt, cl, e.Metadata, result.Plan)
+		jre, be, err := libjvm.NewJRE(context.Application.Path, depJRE, dc, dt, cl, e.Metadata)
 		if err != nil {
 			return libcnb.BuildResult{}, fmt.Errorf("unable to create jre\n%w", err)
 		}
 
 		jre.Logger = b.Logger
 		result.Layers = append(result.Layers, jre)
+		result.BOM.Entries = append(result.BOM.Entries, be)
 
 		if libjvm.IsLaunchContribution(e.Metadata) {
 			helpers := []string{"active-processor-count", "java-opts", "link-local-dns", "memory-calculator",
@@ -120,18 +122,20 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 				helpers = append(helpers, "security-providers-classpath-9")
 			}
 
-			h := libpak.NewHelperLayerContributor(context.Buildpack, result.Plan, helpers...)
+			h, be := libpak.NewHelperLayer(context.Buildpack, helpers...)
 			h.Logger = b.Logger
 			result.Layers = append(result.Layers, h)
+			result.BOM.Entries = append(result.BOM.Entries, be)
 
 			depJVMKill, err := dr.Resolve("jvmkill", "")
 			if err != nil {
 				return libcnb.BuildResult{}, fmt.Errorf("unable to find dependency\n%w", err)
 			}
 
-			jk := libjvm.NewJVMKill(depJVMKill, dc, result.Plan)
+			jk, be := libjvm.NewJVMKill(depJVMKill, dc)
 			jk.Logger = b.Logger
 			result.Layers = append(result.Layers, jk)
+			result.BOM.Entries = append(result.BOM.Entries, be)
 
 			jsp := libjvm.NewJavaSecurityProperties(context.Buildpack.Info)
 			jsp.Logger = b.Logger
