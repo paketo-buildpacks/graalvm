@@ -279,7 +279,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			Expect(result.BOM.Entries[0].Launch).To(BeFalse())
 			Expect(result.BOM.Entries[0].Build).To(BeTrue())
 			Expect(result.BOM.Entries[1].Name).To(Equal("native-image-svm"))
-			Expect(result.BOM.Entries[1].Launch).To(BeFalse())
+			Expect(result.BOM.Entries[1].Launch).To(BeTrue())
 			Expect(result.BOM.Entries[1].Build).To(BeTrue())
 		})
 

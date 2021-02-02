@@ -82,6 +82,7 @@ func NewJDK(jdkDependency libpak.BuildpackDependency, nativeImageDependency *lib
 	if nativeImageDependency != nil {
 		entry := nativeImageDependency.AsBOMEntry()
 		entry.Metadata["layer"] = j.Name()
+		entry.Launch = true
 		entry.Build = true
 		bomEntries = append(bomEntries, entry)
 	}
