@@ -39,9 +39,7 @@ type JDK struct {
 	NativeImageDependency *libpak.BuildpackDependency
 }
 
-func NewJDK(jdkDependency libpak.BuildpackDependency, nativeImageDependency *libpak.BuildpackDependency,
-	cache libpak.DependencyCache, certificateLoader libjvm.CertificateLoader, plan *libcnb.BuildpackPlan) (JDK, error) {
-
+func NewJDK(jdkDependency libpak.BuildpackDependency, nativeImageDependency *libpak.BuildpackDependency, cache libpak.DependencyCache, certificateLoader libjvm.CertificateLoader) (JDK, []libcnb.BOMEntry, error) {
 	dependencies := []libpak.BuildpackDependency{jdkDependency}
 
 	if nativeImageDependency != nil {
@@ -51,33 +49,45 @@ func NewJDK(jdkDependency libpak.BuildpackDependency, nativeImageDependency *lib
 	expected := map[string]interface{}{"dependencies": dependencies}
 
 	if md, err := certificateLoader.Metadata(); err != nil {
-		return JDK{}, fmt.Errorf("unable to generate certificate loader metadata")
+		return JDK{}, nil, fmt.Errorf("unable to generate certificate loader metadata")
 	} else {
 		for k, v := range md {
 			expected[k] = v
 		}
 	}
 
+	contributor := libpak.NewLayerContributor(
+		bard.FormatIdentity(jdkDependency.Name, jdkDependency.Version),
+		expected,
+		libcnb.LayerTypes{
+			Build: true,
+			Cache: true,
+		},
+	)
 	j := JDK{
 		CertificateLoader:     certificateLoader,
 		DependencyCache:       cache,
 		Executor:              effect.NewExecutor(),
 		JDKDependency:         jdkDependency,
-		LayerContributor:      libpak.NewLayerContributor(bard.FormatIdentity(jdkDependency.Name, jdkDependency.Version), expected),
+		LayerContributor:      contributor,
 		NativeImageDependency: nativeImageDependency,
 	}
 
-	entry := jdkDependency.AsBuildpackPlanEntry()
+	var bomEntries []libcnb.BOMEntry
+	entry := jdkDependency.AsBOMEntry()
 	entry.Metadata["layer"] = j.Name()
-	plan.Entries = append(plan.Entries, entry)
+	entry.Build = true
+	bomEntries = append(bomEntries, entry)
 
 	if nativeImageDependency != nil {
-		entry := nativeImageDependency.AsBuildpackPlanEntry()
+		entry := nativeImageDependency.AsBOMEntry()
 		entry.Metadata["layer"] = j.Name()
-		plan.Entries = append(plan.Entries, entry)
+		entry.Launch = true
+		entry.Build = true
+		bomEntries = append(bomEntries, entry)
 	}
 
-	return j, nil
+	return j, bomEntries, nil
 }
 
 func (j JDK) Contribute(layer libcnb.Layer) (libcnb.Layer, error) {
@@ -132,7 +142,7 @@ func (j JDK) Contribute(layer libcnb.Layer) (libcnb.Layer, error) {
 		}
 
 		return layer, nil
-	}, libpak.BuildLayer, libpak.CacheLayer)
+	})
 }
 
 func (JDK) Name() string {

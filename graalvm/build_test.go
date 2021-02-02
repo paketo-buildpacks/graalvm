@@ -82,6 +82,14 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		Expect(result.Layers[1].Name()).To(Equal("helper"))
 		Expect(result.Layers[2].Name()).To(Equal("jvmkill"))
 		Expect(result.Layers[3].Name()).To(Equal("java-security-properties"))
+
+		Expect(result.BOM.Entries).To(HaveLen(3))
+		Expect(result.BOM.Entries[0].Name).To(Equal("jre"))
+		Expect(result.BOM.Entries[0].Launch).To(BeTrue())
+		Expect(result.BOM.Entries[1].Name).To(Equal("helper"))
+		Expect(result.BOM.Entries[1].Launch).To(BeTrue())
+		Expect(result.BOM.Entries[2].Name).To(Equal("jvmkill"))
+		Expect(result.BOM.Entries[2].Launch).To(BeTrue())
 	})
 
 	it("contributes security-providers-classpath-8 before Java 9", func() {
@@ -149,7 +157,10 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 	})
 
 	it("contributes JDK when no JRE", func() {
-		ctx.Plan.Entries = append(ctx.Plan.Entries, libcnb.BuildpackPlanEntry{Name: "jre"})
+		ctx.Plan.Entries = append(
+			ctx.Plan.Entries,
+			libcnb.BuildpackPlanEntry{Name: "jre", Metadata: LaunchContribution},
+		)
 		ctx.Buildpack.Metadata = map[string]interface{}{
 			"dependencies": []map[string]interface{}{
 				{
@@ -171,6 +182,14 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 
 		Expect(result.Layers[0].Name()).To(Equal("jdk"))
 		Expect(result.Layers[0].(libjvm.JRE).LayerContributor.Dependency.ID).To(Equal("jdk"))
+
+		Expect(result.BOM.Entries).To(HaveLen(3))
+		Expect(result.BOM.Entries[0].Name).To(Equal("jdk"))
+		Expect(result.BOM.Entries[0].Launch).To(BeTrue())
+		Expect(result.BOM.Entries[1].Name).To(Equal("helper"))
+		Expect(result.BOM.Entries[1].Launch).To(BeTrue())
+		Expect(result.BOM.Entries[2].Name).To(Equal("jvmkill"))
+		Expect(result.BOM.Entries[2].Launch).To(BeTrue())
 	})
 
 	context("$BP_JVM_VERSION", func() {
@@ -254,6 +273,14 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			Expect(result.Layers).To(HaveLen(1))
 			Expect(result.Layers[0].Name()).To(Equal("jdk"))
 			Expect(result.Layers[0].(graalvm.JDK).NativeImageDependency).NotTo(BeNil())
+
+			Expect(result.BOM.Entries).To(HaveLen(2))
+			Expect(result.BOM.Entries[0].Name).To(Equal("jdk"))
+			Expect(result.BOM.Entries[0].Launch).To(BeFalse())
+			Expect(result.BOM.Entries[0].Build).To(BeTrue())
+			Expect(result.BOM.Entries[1].Name).To(Equal("native-image-svm"))
+			Expect(result.BOM.Entries[1].Launch).To(BeTrue())
+			Expect(result.BOM.Entries[1].Build).To(BeTrue())
 		})
 
 		it("skips JRE dependencies", func() {
