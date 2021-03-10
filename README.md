@@ -1,7 +1,7 @@
 # `gcr.io/paketo-buildpacks/graalvm`
-The Paketo GraalVM Buildpack is a Cloud Native Buildpack that provides the GraalVM implementations of JREs and JDKs.
+The Paketo GraalVM Buildpack is a Cloud Native Buildpack that provides the GraalVM implementations of the JDK and GraalVM [Native Image builder][native-image].
 
-This buildpack is designed to work in collaboration with other buildpacks which request contributions of JREs and JDKs.
+This buildpack is designed to work in collaboration with other buildpacks which request contributions of JREs, JDKs, or Native Image builder.
 
 ## Behavior
 This buildpack will participate if any of the following conditions are met
@@ -23,7 +23,7 @@ The buildpack will do the following if `native-image-builder` is requested:
 
 The buildpack will do the following if a JRE is requested:
 
-* Contributes a JRE to a layer with all commands on `$PATH`
+* Contributes a JDK to a layer with all commands on `$PATH` (GraalVM does not distribute a standalone JRE)
 * Contributes `$JAVA_HOME` configured to the layer
 * Contributes `-XX:ActiveProcessorCount` to the layer
 * Contributes `$MALLOC_ARENA_MAX` to the layer
@@ -58,3 +58,4 @@ The buildpack optionally accepts the following bindings:
 This buildpack is released under version 2.0 of the [Apache License][a].
 
 [a]: http://www.apache.org/licenses/LICENSE-2.0
+[native-image]: https://www.graalvm.org/reference-manual/native-image/
