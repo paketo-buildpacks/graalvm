@@ -32,6 +32,7 @@ var (
 func TestUnit(t *testing.T) {
 	suite := spec.New("graalvm", spec.Report(report.Terminal{}))
 	suite("Build", testBuild)
+	suite("Detect", testDetect)
 	suite("JDK", testJDK)
 	suite.Run(t)
 }

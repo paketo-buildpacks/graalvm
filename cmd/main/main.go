@@ -19,7 +19,6 @@ package main
 import (
 	"os"
 
-	"github.com/paketo-buildpacks/libjvm"
 	"github.com/paketo-buildpacks/libpak"
 	"github.com/paketo-buildpacks/libpak/bard"
 
@@ -28,7 +27,7 @@ import (
 
 func main() {
 	libpak.Main(
-		libjvm.Detect{},
+		graalvm.Detect{},
 		graalvm.Build{Logger: bard.NewLogger(os.Stdout)},
 	)
 }

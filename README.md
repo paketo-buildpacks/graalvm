@@ -8,15 +8,18 @@ This buildpack will participate if any of the following conditions are met
 
 * Another buildpack requires `jdk`
 * Another buildpack requires `jre`
+* Another buildpack requires `native-image-builder`
 
 The buildpack will do the following if a JDK is requested:
 
 * Contributes a JDK to a layer marked `build` and `cache` with all commands on `$PATH`
 * Contributes `$JAVA_HOME` configured to the build layer
 * Contributes `$JDK_HOME` configure to the build layer
-* If `metadata.native-image = true`
-  * Installs the Native Image Substrate VM into the JDK
-  * Prevents the JRE from being installed, even if requested
+
+The buildpack will do the following if `native-image-builder` is requested:
+* Contribute a JDK (see above)
+* Installs the Native Image Substrate VM into the JDK
+* Prevents the JRE from being installed, even if requested
 
 The buildpack will do the following if a JRE is requested:
 
