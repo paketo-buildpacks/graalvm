@@ -247,10 +247,14 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 
 	context("native image enabled", func() {
 		it("contributes native image dependency", func() {
-			ctx.Plan.Entries = append(ctx.Plan.Entries, libcnb.BuildpackPlanEntry{
-				Name:     "jdk",
-				Metadata: map[string]interface{}{"native-image": true},
-			})
+			ctx.Plan.Entries = append(ctx.Plan.Entries,
+				libcnb.BuildpackPlanEntry{
+					Name: "jdk",
+				},
+				libcnb.BuildpackPlanEntry{
+					Name: "native-image-builder",
+				},
+			)
 			ctx.Buildpack.Metadata = map[string]interface{}{
 				"dependencies": []map[string]interface{}{
 					{
@@ -286,8 +290,10 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		it("skips JRE dependencies", func() {
 			ctx.Plan.Entries = append(ctx.Plan.Entries,
 				libcnb.BuildpackPlanEntry{
-					Name:     "jdk",
-					Metadata: map[string]interface{}{"native-image": true},
+					Name: "jdk",
+				},
+				libcnb.BuildpackPlanEntry{
+					Name: "native-image-builder",
 				},
 				libcnb.BuildpackPlanEntry{
 					Name: "jre",

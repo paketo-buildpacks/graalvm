@@ -58,16 +58,23 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 	v, _ := cr.Resolve("BP_JVM_VERSION")
 	var nativeImage bool
 
-	if j, ok, err := pr.Resolve("jdk"); err != nil {
+	if _, ok, err := pr.Resolve(PlanEntryJDK); err != nil {
 		return libcnb.BuildResult{}, fmt.Errorf("unable to resolve jdk plan entry\n%w", err)
 	} else if ok {
-		jdkDependency, err := dr.Resolve("jdk", v)
+		jdkDependency, err := dr.Resolve(PlanEntryJDK, v)
 		if err != nil {
 			return libcnb.BuildResult{}, fmt.Errorf("unable to find dependency\n%w", err)
 		}
 
 		var nativeImageDependency *libpak.BuildpackDependency
-		if nativeImage, ok = j.Metadata["native-image"].(bool); ok && nativeImage {
+		if _, nativeImage, err = pr.Resolve(PlanEntryNativeImageBuilder); err != nil {
+			return libcnb.BuildResult{}, fmt.Errorf(
+				"unable to resolve %s plan entry\n%w",
+				PlanEntryNativeImageBuilder,
+				err,
+			)
+		}
+		if nativeImage {
 			dep, err := dr.Resolve("native-image-svm", v)
 			if err != nil {
 				return libcnb.BuildResult{}, fmt.Errorf("unable to find dependency\n%w", err)
@@ -85,7 +92,7 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 		result.BOM.Entries = append(result.BOM.Entries, be...)
 	}
 
-	if e, ok, err := pr.Resolve("jre"); err != nil {
+	if e, ok, err := pr.Resolve(PlanEntryJRE); err != nil {
 		return libcnb.BuildResult{}, fmt.Errorf("unable to resolve jre plan entry\n%w", err)
 	} else if ok && !nativeImage {
 		dt := libjvm.JREType
