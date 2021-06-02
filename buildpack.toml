@@ -12,13 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-api = "0.5"
+api = "0.6"
 
 [buildpack]
 id       = "paketo-buildpacks/graalvm"
 name     = "Paketo GraalVM Buildpack"
 version  = "{{.version}}"
 homepage = "https://github.com/paketo-buildpacks/graalvm"
+description = "A Cloud Native Buildpack that provides the GraalVM implementations of JREs, JDKs and Native Image tools"
+keywords    = ["java", "jvm", "jre", "jdk", "native-image"]
+
+[[buildpack.licenses]]
+type = "Apache-2.0"
+uri  = "https://github.com/paketo-buildpacks/graalvm/blob/main/LICENSE"
 
 [[stacks]]
 id = "io.buildpacks.stacks.bionic"
