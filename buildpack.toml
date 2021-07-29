@@ -33,7 +33,7 @@ id = "io.buildpacks.stacks.bionic"
 id = "io.paketo.stacks.tiny"
 
 [[stacks]]
-id = "org.cloudfoundry.stacks.cflinuxfs3"
+id = "*"
 
 [[metadata.configurations]]
 name        = "BPL_JVM_HEAD_ROOM"
@@ -70,7 +70,7 @@ name    = "GraalVM JDK"
 version = "8.0.292"
 uri     = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.1.0/graalvm-ce-java8-linux-amd64-21.1.0.tar.gz"
 sha256  = "fbb3bd8bed21dbcec905c40d40253b00fcd9a77a62aa203214f09a1c268f50cf"
-stacks  = [ "io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "org.cloudfoundry.stacks.cflinuxfs3" ]
+stacks  = [ "io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*" ]
 
   [[metadata.dependencies.licenses]]
   type = "GPL-2.0 WITH Classpath-exception-2.0"
@@ -82,7 +82,7 @@ name    = "GraalVM Native Image Substrate VM"
 version = "8.0.292"
 uri     = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.1.0/native-image-installable-svm-java8-linux-amd64-21.1.0.jar"
 sha256  = "4ed1f20edb3ebd0c3203008799b8f20a3e646318c64c20412b08baf9fa0d40f2"
-stacks  = [ "io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "org.cloudfoundry.stacks.cflinuxfs3" ]
+stacks  = [ "io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*" ]
 
   [[metadata.dependencies.licenses]]
   type = "GPL-2.0 WITH Classpath-exception-2.0"
@@ -94,7 +94,7 @@ name    = "GraalVM JDK"
 version = "11.0.12"
 uri     = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.2.0/graalvm-ce-java11-linux-amd64-21.2.0.tar.gz"
 sha256  = "bbd3e03025168172a76c2a29e6a14c1c37e3476b30774259c3ef5952fb86f470"
-stacks  = [ "io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "org.cloudfoundry.stacks.cflinuxfs3" ]
+stacks  = [ "io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*" ]
 
   [[metadata.dependencies.licenses]]
   type = "GPL-2.0 WITH Classpath-exception-2.0"
@@ -106,7 +106,7 @@ name    = "GraalVM Native Image Substrate VM"
 version = "11.0.12"
 uri     = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.2.0/native-image-installable-svm-java11-linux-amd64-21.2.0.jar"
 sha256  = "6fc4c6becbe0331aa0a038660fde7c4769c6d6e97d5a90a716a898188d3a6df9"
-stacks  = [ "io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "org.cloudfoundry.stacks.cflinuxfs3" ]
+stacks  = [ "io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*" ]
 
   [[metadata.dependencies.licenses]]
   type = "GPL-2.0 WITH Classpath-exception-2.0"
@@ -118,7 +118,7 @@ name    = "JVMKill Agent"
 version = "1.16.0"
 uri     = "https://github.com/cloudfoundry/jvmkill/releases/download/v1.16.0.RELEASE/jvmkill-1.16.0-RELEASE.so"
 sha256  = "a3092627b082cb3cdbbe4b255d35687126aa604e6b613dcda33be9f7e1277162"
-stacks  = [ "io.buildpacks.stacks.bionic", "org.cloudfoundry.stacks.cflinuxfs3" ]
+stacks  = [ "io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*" ]
 
   [[metadata.dependencies.licenses]]
   type = "Apache-2.0"
