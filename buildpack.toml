@@ -67,9 +67,9 @@ launch      = true
 [[metadata.dependencies]]
 id      = "jdk"
 name    = "GraalVM JDK"
-version = "8.0.292"
-uri     = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.1.0/graalvm-ce-java8-linux-amd64-21.1.0.tar.gz"
-sha256  = "fbb3bd8bed21dbcec905c40d40253b00fcd9a77a62aa203214f09a1c268f50cf"
+version = "8.0.302"
+uri     = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.2.0/graalvm-ce-java8-linux-amd64-21.2.0.tar.gz"
+sha256  = "0ea16ff2fe178800195e2918ee7ceee352601d4161a17eac67979febaaecfe05"
 stacks  = [ "io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "org.cloudfoundry.stacks.cflinuxfs3" ]
 
   [[metadata.dependencies.licenses]]
