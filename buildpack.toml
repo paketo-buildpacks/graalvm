@@ -67,9 +67,9 @@ launch      = true
 [[metadata.dependencies]]
 id      = "jdk"
 name    = "GraalVM JDK"
-version = "8.0.292"
-uri     = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.1.0/graalvm-ce-java8-linux-amd64-21.1.0.tar.gz"
-sha256  = "fbb3bd8bed21dbcec905c40d40253b00fcd9a77a62aa203214f09a1c268f50cf"
+version = "8.0.302"
+uri     = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.2.0/graalvm-ce-java8-linux-amd64-21.2.0.tar.gz"
+sha256  = "0ea16ff2fe178800195e2918ee7ceee352601d4161a17eac67979febaaecfe05"
 stacks  = [ "io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*" ]
 
   [[metadata.dependencies.licenses]]
@@ -79,9 +79,9 @@ stacks  = [ "io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*" ]
 [[metadata.dependencies]]
 id      = "native-image-svm"
 name    = "GraalVM Native Image Substrate VM"
-version = "8.0.292"
-uri     = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.1.0/native-image-installable-svm-java8-linux-amd64-21.1.0.jar"
-sha256  = "4ed1f20edb3ebd0c3203008799b8f20a3e646318c64c20412b08baf9fa0d40f2"
+version = "8.0.302"
+uri     = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.2.0/native-image-installable-svm-java8-linux-amd64-21.2.0.jar"
+sha256  = "4c434b1043a3aeb3307296b66fe040b6d53a93a8090ea2e298b4ea455bcf9bca"
 stacks  = [ "io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*" ]
 
   [[metadata.dependencies.licenses]]
@@ -106,6 +106,30 @@ name    = "GraalVM Native Image Substrate VM"
 version = "11.0.12"
 uri     = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.2.0/native-image-installable-svm-java11-linux-amd64-21.2.0.jar"
 sha256  = "6fc4c6becbe0331aa0a038660fde7c4769c6d6e97d5a90a716a898188d3a6df9"
+stacks  = [ "io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*" ]
+
+  [[metadata.dependencies.licenses]]
+  type = "GPL-2.0 WITH Classpath-exception-2.0"
+  uri  = "https://openjdk.java.net/legal/gplv2+ce.html"
+
+[[metadata.dependencies]]
+id      = "jdk"
+name    = "GraalVM JDK"
+version = "16.0.2"
+uri     = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.2.0/graalvm-ce-java16-linux-amd64-21.2.0.tar.gz"
+sha256  = "0755973c3d9685e7efecf0437f08ec876d3a8daa78434d9b231364e60a158917"
+stacks  = [ "io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*" ]
+
+  [[metadata.dependencies.licenses]]
+  type = "GPL-2.0 WITH Classpath-exception-2.0"
+  uri  = "https://openjdk.java.net/legal/gplv2+ce.html"
+
+[[metadata.dependencies]]
+id      = "native-image-svm"
+name    = "GraalVM Native Image Substrate VM"
+version = "16.0.2"
+uri     = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.2.0/native-image-installable-svm-java16-linux-amd64-21.2.0.jar"
+sha256  = "aa8bb0be49d74a1655c42244150d0c2b0286d26bb8fca1c1b43c0b3e081a42e3"
 stacks  = [ "io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*" ]
 
   [[metadata.dependencies.licenses]]
