@@ -120,7 +120,7 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 		result.BOM.Entries = append(result.BOM.Entries, be)
 
 		if libjvm.IsLaunchContribution(e.Metadata) {
-			helpers := []string{"active-processor-count", "java-opts", "link-local-dns", "memory-calculator",
+			helpers := []string{"active-processor-count", "java-opts", "jvm-heap", "link-local-dns", "memory-calculator",
 				"openssl-certificate-loader", "security-providers-configurer"}
 
 			if libjvm.IsBeforeJava9(depJRE.Version) {
@@ -132,16 +132,6 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 			h, be := libpak.NewHelperLayer(context.Buildpack, helpers...)
 			h.Logger = b.Logger
 			result.Layers = append(result.Layers, h)
-			result.BOM.Entries = append(result.BOM.Entries, be)
-
-			depJVMKill, err := dr.Resolve("jvmkill", "")
-			if err != nil {
-				return libcnb.BuildResult{}, fmt.Errorf("unable to find dependency\n%w", err)
-			}
-
-			jk, be := libjvm.NewJVMKill(depJVMKill, dc)
-			jk.Logger = b.Logger
-			result.Layers = append(result.Layers, jk)
 			result.BOM.Entries = append(result.BOM.Entries, be)
 
 			jsp := libjvm.NewJavaSecurityProperties(context.Buildpack.Info)
