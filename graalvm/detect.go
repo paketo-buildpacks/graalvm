@@ -35,17 +35,11 @@ func (d Detect) Detect(context libcnb.DetectContext) (libcnb.DetectResult, error
 			{
 				Provides: []libcnb.BuildPlanProvide{
 					{Name: PlanEntryJDK},
-				},
-			},
-			{
-				Provides: []libcnb.BuildPlanProvide{
+					{Name: PlanEntryNativeImageBuilder},
 					{Name: PlanEntryJRE},
 				},
-			},
-			{
-				Provides: []libcnb.BuildPlanProvide{
+				Requires: []libcnb.BuildPlanRequire{
 					{Name: PlanEntryJDK},
-					{Name: PlanEntryJRE},
 				},
 			},
 			{
@@ -60,11 +54,17 @@ func (d Detect) Detect(context libcnb.DetectContext) (libcnb.DetectResult, error
 			{
 				Provides: []libcnb.BuildPlanProvide{
 					{Name: PlanEntryJDK},
-					{Name: PlanEntryNativeImageBuilder},
 					{Name: PlanEntryJRE},
 				},
-				Requires: []libcnb.BuildPlanRequire{
+			},
+			{
+				Provides: []libcnb.BuildPlanProvide{
 					{Name: PlanEntryJDK},
+				},
+			},
+			{
+				Provides: []libcnb.BuildPlanProvide{
+					{Name: PlanEntryJRE},
 				},
 			},
 		},
