@@ -18,6 +18,7 @@ package graalvm
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/buildpacks/libcnb"
 	"github.com/heroku/color"
@@ -56,24 +57,48 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 	cl.Logger = b.Logger.BodyWriter()
 
 	v, _ := cr.Resolve("BP_JVM_VERSION")
-	var nativeImage bool
 
-	if _, ok, err := pr.Resolve(PlanEntryJDK); err != nil {
+	jreSkipped := false
+	if t, _ := cr.Resolve("BP_JVM_TYPE"); strings.ToLower(t) == "jdk" {
+		jreSkipped = true
+	}
+
+	_, jdkRequired, err := pr.Resolve(PlanEntryJDK)
+	if err != nil {
 		return libcnb.BuildResult{}, fmt.Errorf("unable to resolve jdk plan entry\n%w", err)
-	} else if ok {
+	}
+
+	jrePlanEntry, jreRequired, err := pr.Resolve("jre")
+	if err != nil {
+		return libcnb.BuildResult{}, fmt.Errorf("unable to resolve jre plan entry\n%w", err)
+	}
+
+	var nativeImage bool
+	var nativeImageDependency *libpak.BuildpackDependency
+	if _, nativeImage, err = pr.Resolve(PlanEntryNativeImageBuilder); err != nil {
+		return libcnb.BuildResult{}, fmt.Errorf(
+			"unable to resolve %s plan entry\n%w",
+			PlanEntryNativeImageBuilder,
+			err,
+		)
+	}
+
+	jreAvailable := jreRequired
+	if jreRequired {
+		_, err := dr.Resolve("jre", v)
+		if libpak.IsNoValidDependencies(err) {
+			jreAvailable = false
+		}
+	}
+
+	// we need a JDK and native-image-builder is requested (JRE will not be provided)
+	// we need a JDK, native-image-builder is not requested (we're not using the JDK as a JRE and the JRE has not been skipped)
+	if (jdkRequired && nativeImage) || jdkRequired && !(jreRequired && !jreAvailable) && !jreSkipped {
 		jdkDependency, err := dr.Resolve(PlanEntryJDK, v)
 		if err != nil {
 			return libcnb.BuildResult{}, fmt.Errorf("unable to find dependency\n%w", err)
 		}
 
-		var nativeImageDependency *libpak.BuildpackDependency
-		if _, nativeImage, err = pr.Resolve(PlanEntryNativeImageBuilder); err != nil {
-			return libcnb.BuildResult{}, fmt.Errorf(
-				"unable to resolve %s plan entry\n%w",
-				PlanEntryNativeImageBuilder,
-				err,
-			)
-		}
 		if nativeImage {
 			dep, err := dr.Resolve("native-image-svm", v)
 			if err != nil {
@@ -81,7 +106,6 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 			}
 			nativeImageDependency = &dep
 		}
-
 		jdk, be, err := NewJDK(jdkDependency, nativeImageDependency, dc, cl)
 		if err != nil {
 			return libcnb.BuildResult{}, fmt.Errorf("unable to create jdk\n%w", err)
@@ -92,25 +116,27 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 		result.BOM.Entries = append(result.BOM.Entries, be...)
 	}
 
-	if e, ok, err := pr.Resolve(PlanEntryJRE); err != nil {
-		return libcnb.BuildResult{}, fmt.Errorf("unable to resolve jre plan entry\n%w", err)
-	} else if ok && !nativeImage {
+	// JRE is requested and native-image-builder is not - use the JDK as a JRE
+	if jreRequired && !nativeImage {
 		dt := libjvm.JREType
-		depJRE, err := dr.Resolve("jre", v)
+		depJRE, err := dr.Resolve(PlanEntryJRE, v)
 
-		if libpak.IsNoValidDependencies(err) {
-			warn := color.New(color.FgYellow, color.Bold)
-			b.Logger.Header(warn.Sprint("No valid JRE available, providing matching JDK instead. Using a JDK at runtime has security implications."))
+		if !jreAvailable || jreSkipped {
+			b.warnIfJreNotUsed(jreAvailable, jreSkipped)
+
+			// This forces the contributed layer to be build + cache + launch so it's available everywhere
+			jrePlanEntry.Metadata["build"] = true
+			jrePlanEntry.Metadata["cache"] = true
 
 			dt = libjvm.JDKType
-			depJRE, err = dr.Resolve("jdk", v)
+			depJRE, err = dr.Resolve(PlanEntryJDK, v)
 		}
 
 		if err != nil {
 			return libcnb.BuildResult{}, fmt.Errorf("unable to find dependency\n%w", err)
 		}
 
-		jre, be, err := libjvm.NewJRE(context.Application.Path, depJRE, dc, dt, cl, e.Metadata)
+		jre, be, err := libjvm.NewJRE(context.Application.Path, depJRE, dc, dt, cl, jrePlanEntry.Metadata)
 		if err != nil {
 			return libcnb.BuildResult{}, fmt.Errorf("unable to create jre\n%w", err)
 		}
@@ -119,7 +145,7 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 		result.Layers = append(result.Layers, jre)
 		result.BOM.Entries = append(result.BOM.Entries, be)
 
-		if libjvm.IsLaunchContribution(e.Metadata) {
+		if libjvm.IsLaunchContribution(jrePlanEntry.Metadata) {
 			helpers := []string{"active-processor-count", "java-opts", "jvm-heap", "link-local-dns", "memory-calculator",
 				"openssl-certificate-loader", "security-providers-configurer"}
 
@@ -139,6 +165,25 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 			result.Layers = append(result.Layers, jsp)
 		}
 	}
-
 	return result, nil
+}
+
+func (b Build) warnIfJreNotUsed(jreAvailable, jreSkipped bool) {
+	msg := "Using a JDK at runtime has security implications."
+
+	if !jreAvailable && !jreSkipped {
+		msg = fmt.Sprintf("No valid JRE available, providing matching JDK instead. %s", msg)
+	}
+
+	if jreSkipped {
+		subMsg := "A JDK was specifically requested by the user"
+		if jreAvailable {
+			subMsg = fmt.Sprintf("%s, however a JRE is available", subMsg)
+		} else {
+			subMsg = fmt.Sprintf("%s and a JDK is the only option", subMsg)
+		}
+		msg = fmt.Sprintf("%s. %s", subMsg, msg)
+	}
+
+	b.Logger.Header(color.New(color.FgYellow, color.Bold).Sprint(msg))
 }
