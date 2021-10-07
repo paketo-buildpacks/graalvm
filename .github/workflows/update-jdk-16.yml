@@ -47,8 +47,8 @@ jobs:
                 glob: graalvm-ce-java16-linux-amd64-.+.tar.gz
                 token: ${{ secrets.JAVA_GITHUB_TOKEN }}
                 version: 16
-            - id: buildpack
-              name: Update Buildpack Dependency
+            - name: Update Buildpack Dependency
+              id: buildpack
               run: |
                 #!/usr/bin/env bash
 
