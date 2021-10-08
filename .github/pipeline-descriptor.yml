@@ -65,9 +65,3 @@ dependencies:
     glob:    native-image-installable-svm-java16-linux-amd64-.+.jar
     token:   ${{ secrets.JAVA_GITHUB_TOKEN }}
     version: 16
-- id:   jvmkill
-  uses: docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
-  with:
-    owner:      cloudfoundry
-    repository: jvmkill
-    token:      ${{ secrets.JAVA_GITHUB_TOKEN }}
