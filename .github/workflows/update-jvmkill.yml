@@ -47,8 +47,8 @@ jobs:
                 owner: cloudfoundry
                 repository: jvmkill
                 token: ${{ secrets.JAVA_GITHUB_TOKEN }}
-            - id: buildpack
-              name: Update Buildpack Dependency
+            - name: Update Buildpack Dependency
+              id: buildpack
               run: |
                 #!/usr/bin/env bash
 
