@@ -158,30 +158,6 @@ api = "0.6"
   [[metadata.dependencies]]
     id = "jdk"
     name = "GraalVM JDK"
-    sha256 = "0755973c3d9685e7efecf0437f08ec876d3a8daa78434d9b231364e60a158917"
-    stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*"]
-    uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.2.0/graalvm-ce-java16-linux-amd64-21.2.0.tar.gz"
-    version = "16.0.2"
-
-    [[metadata.dependencies.licenses]]
-      type = "GPL-2.0 WITH Classpath-exception-2.0"
-      uri = "https://openjdk.java.net/legal/gplv2+ce.html"
-
-  [[metadata.dependencies]]
-    id = "native-image-svm"
-    name = "GraalVM Native Image Substrate VM"
-    sha256 = "aa8bb0be49d74a1655c42244150d0c2b0286d26bb8fca1c1b43c0b3e081a42e3"
-    stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*"]
-    uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.2.0/native-image-installable-svm-java16-linux-amd64-21.2.0.jar"
-    version = "16.0.2"
-
-    [[metadata.dependencies.licenses]]
-      type = "GPL-2.0 WITH Classpath-exception-2.0"
-      uri = "https://openjdk.java.net/legal/gplv2+ce.html"
-
-  [[metadata.dependencies]]
-    id = "jdk"
-    name = "GraalVM JDK"
     sha256 = "11d8039e0a7a31b799a6f20a0e806e4128730e9a2595a7ffdec1443539d4c3f6"
     stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*"]
     uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.3.0/graalvm-ce-java17-linux-amd64-21.3.0.tar.gz"
