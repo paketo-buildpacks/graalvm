@@ -162,7 +162,8 @@ api = "0.7"
     version = "11.0.13"
     purl = "pkg:generic/graalvm-jdk@21.3.0"
     cpes = [
-      "cpe:2.3:a:oracle:graalvm-jdk:21.3.0:*:*:*:*:*:*:*"
+      "cpe:2.3:a:oracle:graalvm:21.3.0:*:*:*:community:*:*:*",
+      "cpe:2.3:a:oracle:jdk:11.0.13:*:*:*:*:*:*:*:*"
     ]
 
     [[metadata.dependencies.licenses]]
