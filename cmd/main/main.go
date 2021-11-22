@@ -35,6 +35,6 @@ func main() {
 	_ = helper.ActiveProcessorCount{Logger: logger}
 	libpak.Main(
 		graalvm.Detect{},
-		graalvm.Build{Logger: bard.NewLogger(os.Stdout)},
+		graalvm.Build{Logger: logger},
 	)
 }
