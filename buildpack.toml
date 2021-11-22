@@ -146,7 +146,7 @@ api = "0.7"
     version = "8.0.302"
     purl = "pkg:generic/graalvm-svm@21.2.0"
     cpes = [
-      "cpe:2.3:a:oracle:graalvm-svm:21.2.0:*:*:*:*:*:*:*"
+      "cpe:2.3:a:oracle:graalvm:21.2.0:*:*:*:community:*:*:*"
     ]
 
     [[metadata.dependencies.licenses]]
