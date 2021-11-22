@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-api = "0.6"
+api = "0.7"
 
 [buildpack]
   description = "A Cloud Native Buildpack that provides the GraalVM implementations of JREs, JDKs and Native Image tools"
@@ -21,6 +21,7 @@ api = "0.6"
   keywords = ["java", "jvm", "jre", "jdk", "native-image"]
   name = "Paketo GraalVM Buildpack"
   version = "{{.version}}"
+  sbom-formats = ["application/vnd.cyclonedx+json", "application/vnd.syft+json"]
 
   [[buildpack.licenses]]
     type = "Apache-2.0"
@@ -126,6 +127,11 @@ api = "0.6"
     stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*"]
     uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.2.0/graalvm-ce-java8-linux-amd64-21.2.0.tar.gz"
     version = "8.0.302"
+    purl = "pkg:generic/graalvm-jdk@21.2.0"
+    cpes = [
+      "cpe:2.3:a:oracle:graalvm:21.2.0:*:*:*:community:*:*:*",
+      "cpe:2.3:a:oracle:jdk:1.8.0:update302:*:*:*:*:*:*:*"
+    ]
 
     [[metadata.dependencies.licenses]]
       type = "GPL-2.0 WITH Classpath-exception-2.0"
@@ -138,6 +144,10 @@ api = "0.6"
     stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*"]
     uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.2.0/native-image-installable-svm-java8-linux-amd64-21.2.0.jar"
     version = "8.0.302"
+    purl = "pkg:generic/graalvm-svm@21.2.0"
+    cpes = [
+      "cpe:2.3:a:oracle:graalvm:21.2.0:*:*:*:community:*:*:*"
+    ]
 
     [[metadata.dependencies.licenses]]
       type = "GPL-2.0 WITH Classpath-exception-2.0"
@@ -150,6 +160,11 @@ api = "0.6"
     stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*"]
     uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.3.0/graalvm-ce-java11-linux-amd64-21.3.0.tar.gz"
     version = "11.0.13"
+    purl = "pkg:generic/graalvm-jdk@21.3.0"
+    cpes = [
+      "cpe:2.3:a:oracle:graalvm:21.3.0:*:*:*:community:*:*:*",
+      "cpe:2.3:a:oracle:jdk:11.0.13:*:*:*:*:*:*:*:*"
+    ]
 
     [[metadata.dependencies.licenses]]
       type = "GPL-2.0 WITH Classpath-exception-2.0"
@@ -162,6 +177,10 @@ api = "0.6"
     stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*"]
     uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.3.0/native-image-installable-svm-java11-linux-amd64-21.3.0.jar"
     version = "11.0.13"
+    purl = "pkg:generic/graalvm-svm@21.3.0"
+    cpes = [
+      "cpe:2.3:a:oracle:graalvm:21.3.0:*:*:*:community:*:*:*"
+    ]
 
     [[metadata.dependencies.licenses]]
       type = "GPL-2.0 WITH Classpath-exception-2.0"
@@ -174,6 +193,11 @@ api = "0.6"
     stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*"]
     uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.3.0/graalvm-ce-java17-linux-amd64-21.3.0.tar.gz"
     version = "17.0.1"
+    purl = "pkg:generic/graalvm-jdk@21.3.0"
+    cpes = [
+      "cpe:2.3:a:oracle:graalvm:21.3.0:*:*:*:community:*:*:*",
+      "cpe:2.3:a:oracle:jdk:17.0.1:*:*:*:*:*:*:*:*"
+    ]
 
     [[metadata.dependencies.licenses]]
       type = "GPL-2.0 WITH Classpath-exception-2.0"
@@ -186,6 +210,10 @@ api = "0.6"
     stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*"]
     uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.3.0/native-image-installable-svm-java17-linux-amd64-21.3.0.jar"
     version = "17.0.1"
+    purl = "pkg:generic/graalvm-svm@21.3.0"
+    cpes = [
+      "cpe:2.3:a:oracle:graalvm:21.3.0:*:*:*:community:*:*:*"
+    ]
 
     [[metadata.dependencies.licenses]]
       type = "GPL-2.0 WITH Classpath-exception-2.0"
