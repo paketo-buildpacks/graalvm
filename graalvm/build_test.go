@@ -57,7 +57,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		Expect(result.Layers[0].Name()).To(Equal("jdk"))
 	})
 
-	it("contributes JRE", func() {
+	it("contributes JRE for API <= 0.6", func() {
 		ctx.Plan.Entries = append(ctx.Plan.Entries, libcnb.BuildpackPlanEntry{Name: "jre", Metadata: LaunchContribution})
 		ctx.Buildpack.Metadata = map[string]interface{}{
 			"dependencies": []map[string]interface{}{
@@ -84,6 +84,33 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		Expect(result.BOM.Entries[0].Launch).To(BeTrue())
 		Expect(result.BOM.Entries[1].Name).To(Equal("helper"))
 		Expect(result.BOM.Entries[1].Launch).To(BeTrue())
+	})
+
+	it("contributes JRE for API 0.7+", func() {
+		ctx.Plan.Entries = append(ctx.Plan.Entries, libcnb.BuildpackPlanEntry{Name: "jre", Metadata: LaunchContribution})
+		ctx.Buildpack.Metadata = map[string]interface{}{
+			"dependencies": []map[string]interface{}{
+				{
+					"id":      "jre",
+					"version": "1.1.1",
+					"stacks":  []interface{}{"test-stack-id"},
+					"cpes":    []string{"cpe:2.3:a:oracle:graalvm:21.2.0:*:*:*:community:*:*:*"},
+					"purl":    "pkg:generic/graalvm-jdk@21.2.0",
+				},
+			},
+		}
+		ctx.StackID = "test-stack-id"
+		ctx.Buildpack.API = "0.7"
+
+		result, err := graalvm.Build{}.Build(ctx)
+		Expect(err).NotTo(HaveOccurred())
+
+		Expect(result.Layers).To(HaveLen(3))
+		Expect(result.Layers[0].Name()).To(Equal("jre"))
+		Expect(result.Layers[1].Name()).To(Equal("helper"))
+		Expect(result.Layers[2].Name()).To(Equal("java-security-properties"))
+
+		Expect(result.BOM.Entries).To(HaveLen(0))
 	})
 
 	it("contributes security-providers-classpath-8 before Java 9", func() {
@@ -149,7 +176,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		}))
 	})
 
-	it("contributes JDK when no JRE and only a JRE is wanted", func() {
+	it("contributes JDK when no JRE and only a JRE is wanted for API <= 0.6", func() {
 		ctx.Plan.Entries = append(
 			ctx.Plan.Entries,
 			libcnb.BuildpackPlanEntry{Name: "jre", Metadata: LaunchContribution},
@@ -179,7 +206,35 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		Expect(result.BOM.Entries[1].Launch).To(BeTrue())
 	})
 
-	it("contributes JDK when no JRE and both a JDK and JRE are wanted", func() {
+	it("contributes JDK when no JRE and only a JRE is wanted for API 0.7+", func() {
+		ctx.Plan.Entries = append(
+			ctx.Plan.Entries,
+			libcnb.BuildpackPlanEntry{Name: "jre", Metadata: LaunchContribution},
+		)
+		ctx.Buildpack.Metadata = map[string]interface{}{
+			"dependencies": []map[string]interface{}{
+				{
+					"id":      "jdk",
+					"version": "1.1.1",
+					"stacks":  []interface{}{"test-stack-id"},
+					"cpes":    []string{"cpe:2.3:a:oracle:graalvm:21.2.0:*:*:*:community:*:*:*"},
+					"purl":    "pkg:generic/graalvm-jdk@21.2.0",
+				},
+			},
+		}
+		ctx.StackID = "test-stack-id"
+		ctx.Buildpack.API = "0.7"
+
+		result, err := graalvm.Build{}.Build(ctx)
+		Expect(err).NotTo(HaveOccurred())
+
+		Expect(result.Layers[0].Name()).To(Equal("jdk"))
+		Expect(result.Layers[0].(libjvm.JRE).LayerContributor.Dependency.ID).To(Equal("jdk"))
+
+		Expect(result.BOM.Entries).To(HaveLen(0))
+	})
+
+	it("contributes JDK when no JRE and both a JDK and JRE are wanted for API <= 0.6", func() {
 		ctx.Plan.Entries = append(ctx.Plan.Entries, libcnb.BuildpackPlanEntry{Name: "jdk", Metadata: LaunchContribution})
 		ctx.Plan.Entries = append(ctx.Plan.Entries, libcnb.BuildpackPlanEntry{Name: "jre", Metadata: LaunchContribution})
 		ctx.Buildpack.Metadata = map[string]interface{}{
@@ -194,7 +249,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		ctx.StackID = "test-stack-id"
 		ctx.Buildpack.API = "0.6"
 
-		result, err := libjvm.Build{}.Build(ctx)
+		result, err := graalvm.Build{}.Build(ctx)
 		Expect(err).NotTo(HaveOccurred())
 
 		Expect(result.Layers[0].Name()).To(Equal("jdk"))
@@ -206,6 +261,32 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		Expect(result.BOM.Entries[0].Build).To(BeTrue())
 		Expect(result.BOM.Entries[1].Name).To(Equal("helper"))
 		Expect(result.BOM.Entries[1].Launch).To(BeTrue())
+	})
+
+	it("contributes JDK when no JRE and both a JDK and JRE are wanted for API 0.7+", func() {
+		ctx.Plan.Entries = append(ctx.Plan.Entries, libcnb.BuildpackPlanEntry{Name: "jdk", Metadata: LaunchContribution})
+		ctx.Plan.Entries = append(ctx.Plan.Entries, libcnb.BuildpackPlanEntry{Name: "jre", Metadata: LaunchContribution})
+		ctx.Buildpack.Metadata = map[string]interface{}{
+			"dependencies": []map[string]interface{}{
+				{
+					"id":      "jdk",
+					"version": "1.1.1",
+					"stacks":  []interface{}{"test-stack-id"},
+					"cpes":    []string{"cpe:2.3:a:oracle:graalvm:21.2.0:*:*:*:community:*:*:*"},
+					"purl":    "pkg:generic/graalvm-jdk@21.2.0",
+				},
+			},
+		}
+		ctx.StackID = "test-stack-id"
+		ctx.Buildpack.API = "0.7"
+
+		result, err := graalvm.Build{}.Build(ctx)
+		Expect(err).NotTo(HaveOccurred())
+
+		Expect(result.Layers[0].Name()).To(Equal("jdk"))
+		Expect(result.Layers[0].(libjvm.JRE).LayerContributor.Dependency.ID).To(Equal("jdk"))
+
+		Expect(result.BOM.Entries).To(HaveLen(0))
 	})
 
 	context("$BP_JVM_VERSION", func() {
@@ -256,7 +337,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		})
 	})
 
-	context("native image enabled", func() {
+	context("native image enabled for API <= 0.6", func() {
 		it("contributes native image dependency", func() {
 			ctx.Plan.Entries = append(ctx.Plan.Entries,
 				libcnb.BuildpackPlanEntry{
@@ -281,6 +362,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 				},
 			}
 			ctx.StackID = "test-stack-id"
+			ctx.Buildpack.API = "0.6"
 
 			result, err := graalvm.Build{}.Build(ctx)
 			Expect(err).NotTo(HaveOccurred())
@@ -297,17 +379,16 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			Expect(result.BOM.Entries[1].Launch).To(BeTrue())
 			Expect(result.BOM.Entries[1].Build).To(BeTrue())
 		})
+	})
 
-		it("skips JRE dependencies", func() {
+	context("native image enabled for API 0.7+", func() {
+		it("contributes native image dependency", func() {
 			ctx.Plan.Entries = append(ctx.Plan.Entries,
 				libcnb.BuildpackPlanEntry{
 					Name: "jdk",
 				},
 				libcnb.BuildpackPlanEntry{
 					Name: "native-image-builder",
-				},
-				libcnb.BuildpackPlanEntry{
-					Name: "jre",
 				},
 			)
 			ctx.Buildpack.Metadata = map[string]interface{}{
@@ -316,23 +397,66 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 						"id":      "jdk",
 						"version": "1.1.1",
 						"stacks":  []interface{}{"test-stack-id"},
+						"cpes":    []string{"cpe:2.3:a:oracle:graalvm:21.2.0:*:*:*:community:*:*:*"},
+						"purl":    "pkg:generic/graalvm-jdk@21.2.0",
 					},
 					{
 						"id":      "native-image-svm",
 						"version": "2.2.2",
 						"stacks":  []interface{}{"test-stack-id"},
+						"cpes":    []string{"cpe:2.3:a:oracle:graalvm:21.2.0:*:*:*:community:*:*:*"},
+						"purl":    "pkg:generic/graalvm-svm@21.2.0",
 					},
 				},
 			}
 			ctx.StackID = "test-stack-id"
+			ctx.Buildpack.API = "0.7"
 
 			result, err := graalvm.Build{}.Build(ctx)
 			Expect(err).NotTo(HaveOccurred())
 
-			Expect(result.Layers[0].Name()).To(Equal("jdk"))
 			Expect(result.Layers).To(HaveLen(1))
+			Expect(result.Layers[0].Name()).To(Equal("jdk"))
+			Expect(result.Layers[0].(graalvm.JDK).NativeImageDependency).NotTo(BeNil())
 
+			Expect(result.BOM.Entries).To(HaveLen(0))
 		})
+	})
+
+	it("skips JRE dependencies", func() {
+		ctx.Plan.Entries = append(ctx.Plan.Entries,
+			libcnb.BuildpackPlanEntry{
+				Name: "jdk",
+			},
+			libcnb.BuildpackPlanEntry{
+				Name: "native-image-builder",
+			},
+			libcnb.BuildpackPlanEntry{
+				Name: "jre",
+			},
+		)
+		ctx.Buildpack.Metadata = map[string]interface{}{
+			"dependencies": []map[string]interface{}{
+				{
+					"id":      "jdk",
+					"version": "1.1.1",
+					"stacks":  []interface{}{"test-stack-id"},
+				},
+				{
+					"id":      "native-image-svm",
+					"version": "2.2.2",
+					"stacks":  []interface{}{"test-stack-id"},
+				},
+			},
+		}
+		ctx.StackID = "test-stack-id"
+
+		result, err := graalvm.Build{}.Build(ctx)
+		Expect(err).NotTo(HaveOccurred())
+
+		Expect(result.Layers[0].Name()).To(Equal("jdk"))
+		Expect(result.Layers).To(HaveLen(1))
+
 	})
 
 	context("$BP_JVM_TYPE", func() {
@@ -362,7 +486,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			}
 			ctx.StackID = "test-stack-id"
 
-			result, err := libjvm.Build{}.Build(ctx)
+			result, err := graalvm.Build{}.Build(ctx)
 			Expect(err).NotTo(HaveOccurred())
 			Expect(result.Layers[0].Name()).To(Equal("jdk"))
 			Expect(result.Layers[0].(libjvm.JRE).LayerContributor.Dependency.ID).To(Equal("jdk"))
@@ -371,7 +495,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			Expect(result.BOM.Entries[0].Launch).To(BeTrue())
 		})
 
-		it("contributes JRE when specified explicitly in $BP_JVM_TYPE", func() {
+		it("contributes JRE when specified explicitly in $BP_JVM_TYPE for API <= 0.6", func() {
 			Expect(os.Setenv("BP_JVM_TYPE", "jre")).To(Succeed())
 
 			ctx.Plan.Entries = append(ctx.Plan.Entries, libcnb.BuildpackPlanEntry{Name: "jdk", Metadata: LaunchContribution})
@@ -391,11 +515,12 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 				},
 			}
 			ctx.StackID = "test-stack-id"
+			ctx.Buildpack.API = "0.6"
 
-			result, err := libjvm.Build{}.Build(ctx)
+			result, err := graalvm.Build{}.Build(ctx)
 			Expect(err).NotTo(HaveOccurred())
 			Expect(result.Layers[0].Name()).To(Equal("jdk"))
-			Expect(result.Layers[0].(libjvm.JDK).LayerContributor.Dependency.ID).To(Equal("jdk"))
+			Expect(result.Layers[0].(graalvm.JDK).JDKDependency.ID).To(Equal("jdk"))
 			Expect(result.Layers[1].(libjvm.JRE).LayerContributor.Dependency.ID).To(Equal("jre"))
 
 			Expect(result.BOM.Entries).To(HaveLen(3))
@@ -406,6 +531,41 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			Expect(result.BOM.Entries[1].Name).To(Equal("jre"))
 			Expect(result.BOM.Entries[1].Launch).To(BeTrue())
 			Expect(result.BOM.Entries[1].Build).To(BeTrue())
+
+		})
+		it("contributes JRE when specified explicitly in $BP_JVM_TYPE for API 0.7+", func() {
+			Expect(os.Setenv("BP_JVM_TYPE", "jre")).To(Succeed())
+
+			ctx.Plan.Entries = append(ctx.Plan.Entries, libcnb.BuildpackPlanEntry{Name: "jdk", Metadata: LaunchContribution})
+			ctx.Plan.Entries = append(ctx.Plan.Entries, libcnb.BuildpackPlanEntry{Name: "jre", Metadata: LaunchContribution})
+			ctx.Buildpack.Metadata = map[string]interface{}{
+				"dependencies": []map[string]interface{}{
+					{
+						"id":      "jdk",
+						"version": "0.0.1",
+						"stacks":  []interface{}{"test-stack-id"},
+						"cpes":    []string{"cpe:2.3:a:oracle:graalvm:21.2.0:*:*:*:community:*:*:*"},
+						"purl":    "pkg:generic/graalvm-jdk@21.2.0",
+					},
+					{
+						"id":      "jre",
+						"version": "1.1.1",
+						"stacks":  []interface{}{"test-stack-id"},
+						"cpes":    []string{"cpe:2.3:a:oracle:graalvm:21.2.0:*:*:*:community:*:*:*"},
+						"purl":    "pkg:generic/graalvm-jre@21.2.0",
+					},
+				},
+			}
+			ctx.StackID = "test-stack-id"
+			ctx.Buildpack.API = "0.7"
+
+			result, err := graalvm.Build{}.Build(ctx)
+			Expect(err).NotTo(HaveOccurred())
+			Expect(result.Layers[0].Name()).To(Equal("jdk"))
+			Expect(result.Layers[0].(graalvm.JDK).JDKDependency.ID).To(Equal("jdk"))
+			Expect(result.Layers[1].(libjvm.JRE).LayerContributor.Dependency.ID).To(Equal("jre"))
+
+			Expect(result.BOM.Entries).To(HaveLen(0))
 
 		})
 	})

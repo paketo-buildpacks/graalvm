@@ -113,7 +113,11 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 
 		jdk.Logger = b.Logger
 		result.Layers = append(result.Layers, jdk)
-		result.BOM.Entries = append(result.BOM.Entries, be...)
+		for _, ent := range be {
+			if ent.Name != "" {
+				result.BOM.Entries = append(result.BOM.Entries, ent)
+			}
+		}
 	}
 
 	// JRE is requested and native-image-builder is not - use the JDK as a JRE
@@ -143,7 +147,9 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 
 		jre.Logger = b.Logger
 		result.Layers = append(result.Layers, jre)
-		result.BOM.Entries = append(result.BOM.Entries, be)
+		if be.Name != "" {
+			result.BOM.Entries = append(result.BOM.Entries, be)
+		}
 
 		if libjvm.IsLaunchContribution(jrePlanEntry.Metadata) {
 			helpers := []string{"active-processor-count", "java-opts", "jvm-heap", "link-local-dns", "memory-calculator",
@@ -161,7 +167,9 @@ func (b Build) Build(context libcnb.BuildContext) (libcnb.BuildResult, error) {
 			h, be := libpak.NewHelperLayer(context.Buildpack, helpers...)
 			h.Logger = b.Logger
 			result.Layers = append(result.Layers, h)
-			result.BOM.Entries = append(result.BOM.Entries, be)
+			if be.Name != "" {
+				result.BOM.Entries = append(result.BOM.Entries, be)
+			}
 
 			jsp := libjvm.NewJavaSecurityProperties(context.Buildpack.Info)
 			jsp.Logger = b.Logger
