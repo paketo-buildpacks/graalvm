@@ -20,7 +20,7 @@ dependencies:
 - name:            JDK 11
   id:              jdk
   version_pattern: "11\\.[\\d]+\\.[\\d]+"
-  purl_pattern:    "[\\d]+\\.[\\d]+\\.[\\d]+"
+  purl_pattern:    "11\\.[\\d]+\\.[\\d]+"
   uses:            docker://ghcr.io/paketo-buildpacks/actions/graalvm-dependency:main
   with:
     glob:    graalvm-ce-java11-linux-amd64-.+.tar.gz
@@ -39,7 +39,7 @@ dependencies:
 - name:            JDK 17
   id:              jdk
   version_pattern: "17\\.[\\d]+\\.[\\d]+"
-  purl_pattern:    "[\\d]+\\.[\\d]+\\.[\\d]+"
+  purl_pattern:    "17\\.[\\d]+\\.[\\d]+"
   uses:            docker://ghcr.io/paketo-buildpacks/actions/graalvm-dependency:main
   with:
     glob:    graalvm-ce-java17-linux-amd64-.+.tar.gz
