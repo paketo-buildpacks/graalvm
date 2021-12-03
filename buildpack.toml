@@ -163,10 +163,10 @@ api = "0.7"
       uri = "https://openjdk.java.net/legal/gplv2+ce.html"
 
   [[metadata.dependencies]]
-    cpes = ["cpe:2.3:a:oracle:graalvm:21.3.0:*:*:*:*:*:*:*"]
+    cpes = ["cpe:2.3:a:oracle:graalvm:21.2.0:*:*:*:*:*:*:*"]
     id = "native-image-svm"
     name = "GraalVM Native Image Substrate VM"
-    purl = "pkg:generic/graalvm-svm@21.3.0"
+    purl = "pkg:generic/graalvm-svm@21.2.0"
     sha256 = "8958d4e0cad07340db0cf9e871776809e2f08fe0c93960f728fec75c4a96764f"
     stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*"]
     uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.3.0/native-image-installable-svm-java11-linux-amd64-21.3.0.jar"
@@ -191,10 +191,10 @@ api = "0.7"
       uri = "https://openjdk.java.net/legal/gplv2+ce.html"
 
   [[metadata.dependencies]]
-    cpes = ["cpe:2.3:a:oracle:graalvm:21.3.0:*:*:*:*:*:*:*"]
+    cpes = ["cpe:2.3:a:oracle:graalvm:21.2.0:*:*:*:*:*:*:*"]
     id = "native-image-svm"
     name = "GraalVM Native Image Substrate VM"
-    purl = "pkg:generic/graalvm-svm@21.3.0"
+    purl = "pkg:generic/graalvm-svm@21.2.0"
     sha256 = "df488a04b5405c6443c90e94710cd3bd2be9adcb3768f91429aa494168d52440"
     stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*"]
     uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.3.0/native-image-installable-svm-java17-linux-amd64-21.3.0.jar"
