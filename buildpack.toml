@@ -121,7 +121,7 @@ api = "0.7"
     name = "JAVA_TOOL_OPTIONS"
 
   [[metadata.dependencies]]
-    cpes = ["cpe:2.3:a:oracle:graalvm:21.2.0:*:*:*:community:*:*:*", "cpe:2.3:a:oracle:jdk:1.8.0:update302:*:*:*:*:*:*:*"]
+    cpes = ["cpe:2.3:a:oracle:jdk:1.8.0:update302:*:*:*:*:*:*:*"]
     id = "jdk"
     name = "GraalVM JDK"
     purl = "pkg:generic/graalvm-jdk@21.2.0"
@@ -135,7 +135,7 @@ api = "0.7"
       uri = "https://openjdk.java.net/legal/gplv2+ce.html"
 
   [[metadata.dependencies]]
-    cpes = ["cpe:2.3:a:oracle:graalvm:21.2.0:*:*:*:community:*:*:*"]
+    cpes = ["cpe:2.3:a:oracle:graalvm:21.2.0:*:*:*:*:*:*:*"]
     id = "native-image-svm"
     name = "GraalVM Native Image Substrate VM"
     purl = "pkg:generic/graalvm-svm@21.2.0"
@@ -149,7 +149,7 @@ api = "0.7"
       uri = "https://openjdk.java.net/legal/gplv2+ce.html"
 
   [[metadata.dependencies]]
-    cpes = ["cpe:2.3:a:oracle:graalvm:21.3.0:*:*:*:community:*:*:*", "cpe:2.3:a:oracle:jdk:11.0.13:*:*:*:*:*:*:*:*"]
+    cpes = ["cpe:2.3:a:oracle:jdk:11.0.13:*:*:*:*:*:*:*:*"]
     id = "jdk"
     name = "GraalVM JDK"
     purl = "pkg:generic/graalvm-jdk@21.3.0"
@@ -163,7 +163,7 @@ api = "0.7"
       uri = "https://openjdk.java.net/legal/gplv2+ce.html"
 
   [[metadata.dependencies]]
-    cpes = ["cpe:2.3:a:oracle:graalvm:21.3.0:*:*:*:community:*:*:*"]
+    cpes = ["cpe:2.3:a:oracle:graalvm:21.3.0:*:*:*:*:*:*:*"]
     id = "native-image-svm"
     name = "GraalVM Native Image Substrate VM"
     purl = "pkg:generic/graalvm-svm@21.3.0"
@@ -177,7 +177,7 @@ api = "0.7"
       uri = "https://openjdk.java.net/legal/gplv2+ce.html"
 
   [[metadata.dependencies]]
-    cpes = ["cpe:2.3:a:oracle:graalvm:21.3.0:*:*:*:community:*:*:*", "cpe:2.3:a:oracle:jdk:17.0.1:*:*:*:*:*:*:*:*"]
+    cpes = ["cpe:2.3:a:oracle:jdk:17.0.1:*:*:*:*:*:*:*:*"]
     id = "jdk"
     name = "GraalVM JDK"
     purl = "pkg:generic/graalvm-jdk@21.3.0"
@@ -191,7 +191,7 @@ api = "0.7"
       uri = "https://openjdk.java.net/legal/gplv2+ce.html"
 
   [[metadata.dependencies]]
-    cpes = ["cpe:2.3:a:oracle:graalvm:21.3.0:*:*:*:community:*:*:*"]
+    cpes = ["cpe:2.3:a:oracle:graalvm:21.3.0:*:*:*:*:*:*:*"]
     id = "native-image-svm"
     name = "GraalVM Native Image Substrate VM"
     purl = "pkg:generic/graalvm-svm@21.3.0"

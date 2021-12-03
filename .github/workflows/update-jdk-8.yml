@@ -88,10 +88,10 @@ jobs:
                 echo "::set-output name=version-label::${LABEL}"
               env:
                 CPE: ${{ steps.dependency.outputs.cpe }}
-                CPE_PATTERN: ""
+                CPE_PATTERN: update[\d]+
                 ID: jdk
                 PURL: ${{ steps.dependency.outputs.purl }}
-                PURL_PATTERN: ""
+                PURL_PATTERN: '[\d]+\.[\d]+\.[\d]+'
                 SHA256: ${{ steps.dependency.outputs.sha256 }}
                 URI: ${{ steps.dependency.outputs.uri }}
                 VERSION: ${{ steps.dependency.outputs.version }}
