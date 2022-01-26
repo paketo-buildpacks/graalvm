@@ -121,14 +121,14 @@ api = "0.7"
     name = "JAVA_TOOL_OPTIONS"
 
   [[metadata.dependencies]]
-    cpes = ["cpe:2.3:a:oracle:jdk:11.0.13:*:*:*:*:*:*:*:*"]
+    cpes = ["cpe:2.3:a:oracle:jdk:11.0.14:*:*:*:*:*:*:*:*"]
     id = "jdk"
     name = "GraalVM JDK"
-    purl = "pkg:generic/graalvm-jdk@11.0.13"
-    sha256 = "3a1bc8eaf0518c128aaacb987ceb0b0e288776f48af630c11c01fd31122d93fa"
+    purl = "pkg:generic/graalvm-jdk@11.0.14"
+    sha256 = "bc86083bb7e2778c7e4fe4f55d74790e42255b96f7806a7fefa51d06f3bc7103"
     stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*"]
-    uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.3.0/graalvm-ce-java11-linux-amd64-21.3.0.tar.gz"
-    version = "11.0.13"
+    uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-22.0.0.2/graalvm-ce-java11-linux-amd64-22.0.0.2.tar.gz"
+    version = "11.0.14"
 
     [[metadata.dependencies.licenses]]
       type = "GPL-2.0 WITH Classpath-exception-2.0"
