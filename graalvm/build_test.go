@@ -110,7 +110,11 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		Expect(result.Layers[1].Name()).To(Equal("helper"))
 		Expect(result.Layers[2].Name()).To(Equal("java-security-properties"))
 
-		Expect(result.BOM.Entries).To(HaveLen(0))
+		Expect(result.BOM.Entries).To(HaveLen(2))
+		Expect(result.BOM.Entries[0].Name).To(Equal("jre"))
+		Expect(result.BOM.Entries[0].Launch).To(BeTrue())
+		Expect(result.BOM.Entries[1].Name).To(Equal("helper"))
+		Expect(result.BOM.Entries[1].Launch).To(BeTrue())
 	})
 
 	it("contributes security-providers-classpath-8 before Java 9", func() {
@@ -231,7 +235,11 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		Expect(result.Layers[0].Name()).To(Equal("jdk"))
 		Expect(result.Layers[0].(libjvm.JRE).LayerContributor.Dependency.ID).To(Equal("jdk"))
 
-		Expect(result.BOM.Entries).To(HaveLen(0))
+		Expect(result.BOM.Entries).To(HaveLen(2))
+		Expect(result.BOM.Entries[0].Name).To(Equal("jdk"))
+		Expect(result.BOM.Entries[0].Launch).To(BeTrue())
+		Expect(result.BOM.Entries[1].Name).To(Equal("helper"))
+		Expect(result.BOM.Entries[1].Launch).To(BeTrue())
 	})
 
 	it("contributes JDK when no JRE and both a JDK and JRE are wanted for API <= 0.6", func() {
@@ -286,7 +294,12 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		Expect(result.Layers[0].Name()).To(Equal("jdk"))
 		Expect(result.Layers[0].(libjvm.JRE).LayerContributor.Dependency.ID).To(Equal("jdk"))
 
-		Expect(result.BOM.Entries).To(HaveLen(0))
+		Expect(result.BOM.Entries).To(HaveLen(2))
+		Expect(result.BOM.Entries[0].Name).To(Equal("jdk"))
+		Expect(result.BOM.Entries[0].Launch).To(BeTrue())
+		Expect(result.BOM.Entries[0].Build).To(BeTrue())
+		Expect(result.BOM.Entries[1].Name).To(Equal("helper"))
+		Expect(result.BOM.Entries[1].Launch).To(BeTrue())
 	})
 
 	context("$BP_JVM_VERSION", func() {
@@ -419,7 +432,13 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			Expect(result.Layers[0].Name()).To(Equal("jdk"))
 			Expect(result.Layers[0].(graalvm.JDK).NativeImageDependency).NotTo(BeNil())
 
-			Expect(result.BOM.Entries).To(HaveLen(0))
+			Expect(result.BOM.Entries).To(HaveLen(2))
+			Expect(result.BOM.Entries[0].Name).To(Equal("jdk"))
+			Expect(result.BOM.Entries[0].Launch).To(BeFalse())
+			Expect(result.BOM.Entries[0].Build).To(BeTrue())
+			Expect(result.BOM.Entries[1].Name).To(Equal("native-image-svm"))
+			Expect(result.BOM.Entries[1].Launch).To(BeTrue())
+			Expect(result.BOM.Entries[1].Build).To(BeTrue())
 		})
 	})
 
@@ -565,8 +584,14 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			Expect(result.Layers[0].(graalvm.JDK).JDKDependency.ID).To(Equal("jdk"))
 			Expect(result.Layers[1].(libjvm.JRE).LayerContributor.Dependency.ID).To(Equal("jre"))
 
-			Expect(result.BOM.Entries).To(HaveLen(0))
+			Expect(result.BOM.Entries).To(HaveLen(3))
+			Expect(result.BOM.Entries[0].Name).To(Equal("jdk"))
+			Expect(result.BOM.Entries[0].Launch).To(BeFalse())
+			Expect(result.BOM.Entries[0].Build).To(BeTrue())
 
+			Expect(result.BOM.Entries[1].Name).To(Equal("jre"))
+			Expect(result.BOM.Entries[1].Launch).To(BeTrue())
+			Expect(result.BOM.Entries[1].Build).To(BeTrue())
 		})
 	})
 }
