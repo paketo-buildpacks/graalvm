@@ -163,14 +163,14 @@ api = "0.7"
       uri = "https://openjdk.java.net/legal/gplv2+ce.html"
 
   [[metadata.dependencies]]
-    cpes = ["cpe:2.3:a:oracle:graalvm:21.3.0:*:*:*:*:*:*:*"]
+    cpes = ["cpe:2.3:a:oracle:graalvm:22.0.0.2:*:*:*:*:*:*:*"]
     id = "native-image-svm"
     name = "GraalVM Native Image Substrate VM"
-    purl = "pkg:generic/graalvm-svm@21.3.0"
-    sha256 = "df488a04b5405c6443c90e94710cd3bd2be9adcb3768f91429aa494168d52440"
+    purl = "pkg:generic/graalvm-svm@22.0.0.2"
+    sha256 = "8c25f650d58c2649c97061cb806dfaec9e685d5d2b80afc7cf72fe61d6891831"
     stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*"]
-    uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.3.0/native-image-installable-svm-java17-linux-amd64-21.3.0.jar"
-    version = "17.0.1"
+    uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-22.0.0.2/native-image-installable-svm-java17-linux-amd64-22.0.0.2.jar"
+    version = "17.0.2"
 
     [[metadata.dependencies.licenses]]
       type = "GPL-2.0 WITH Classpath-exception-2.0"
