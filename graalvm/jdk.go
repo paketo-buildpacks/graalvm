@@ -74,22 +74,18 @@ func NewJDK(jdkDependency libpak.BuildpackDependency, nativeImageDependency *lib
 	}
 
 	var bomEntries []libcnb.BOMEntry
-	if jdkDependency.PURL == "" && len(jdkDependency.CPEs) == 0 {
-		entry := jdkDependency.AsBOMEntry()
-		entry.Metadata["layer"] = j.Name()
-		entry.Build = true
-		bomEntries = append(bomEntries, entry)
-	}
+	entry := jdkDependency.AsBOMEntry()
+	entry.Metadata["layer"] = j.Name()
+	entry.Build = true
+	bomEntries = append(bomEntries, entry)
 
 	if nativeImageDependency != nil {
-		if jdkDependency.PURL == "" && len(jdkDependency.CPEs) == 0 {
-			entry := nativeImageDependency.AsBOMEntry()
-			if entry.Name != "" {
-				entry.Metadata["layer"] = j.Name()
-				entry.Launch = true
-				entry.Build = true
-				bomEntries = append(bomEntries, entry)
-			}
+		entry := nativeImageDependency.AsBOMEntry()
+		if entry.Name != "" {
+			entry.Metadata["layer"] = j.Name()
+			entry.Launch = true
+			entry.Build = true
+			bomEntries = append(bomEntries, entry)
 		}
 	}
 
