@@ -29,8 +29,8 @@ dependencies:
 - name:            Native Image 11
   id:              native-image-svm
   version_pattern: "11\\.[\\d]+\\.[\\d]+"
-  cpe_pattern:     "[\\d]+\\.[\\d]+\\.[\\d]+"
-  purl_pattern:    "[\\d]+\\.[\\d]+\\.[\\d]+"
+  cpe_pattern:     "[\\d]+\\.[\\d]+\\.[\\d]+\\.?[\\d]?"
+  purl_pattern:    "[\\d]+\\.[\\d]+\\.[\\d]+\\.?[\\d]?"
   uses:            docker://ghcr.io/paketo-buildpacks/actions/graalvm-dependency:main
   with:
     glob:    native-image-installable-svm-java11-linux-amd64-.+.jar
@@ -48,8 +48,8 @@ dependencies:
 - name:            Native Image 17
   id:              native-image-svm
   version_pattern: "17\\.[\\d]+\\.[\\d]+"
-  cpe_pattern:     "[\\d]+\\.[\\d]+\\.[\\d]+"
-  purl_pattern:    "[\\d]+\\.[\\d]+\\.[\\d]+"
+  cpe_pattern:     "[\\d]+\\.[\\d]+\\.[\\d]+\\.?[\\d]?"
+  purl_pattern:    "[\\d]+\\.[\\d]+\\.[\\d]+\\.?[\\d]?"
   uses:            docker://ghcr.io/paketo-buildpacks/actions/graalvm-dependency:main
   with:
     glob:    native-image-installable-svm-java17-linux-amd64-.+.jar
