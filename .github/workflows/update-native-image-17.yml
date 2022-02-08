@@ -88,10 +88,10 @@ jobs:
                 echo "::set-output name=version-label::${LABEL}"
               env:
                 CPE: ${{ steps.dependency.outputs.cpe }}
-                CPE_PATTERN: '[\d]+\.[\d]+\.[\d]+'
+                CPE_PATTERN: '[\d]+\.[\d]+\.[\d]+\.?[\d]?'
                 ID: native-image-svm
                 PURL: ${{ steps.dependency.outputs.purl }}
-                PURL_PATTERN: '[\d]+\.[\d]+\.[\d]+'
+                PURL_PATTERN: '[\d]+\.[\d]+\.[\d]+\.?[\d]?'
                 SHA256: ${{ steps.dependency.outputs.sha256 }}
                 URI: ${{ steps.dependency.outputs.uri }}
                 VERSION: ${{ steps.dependency.outputs.version }}
