@@ -26,7 +26,7 @@ import (
 	"github.com/paketo-buildpacks/libpak"
 	"github.com/sclevine/spec"
 
-	"github.com/paketo-buildpacks/graalvm/graalvm"
+	"github.com/paketo-buildpacks/graalvm/v7/graalvm"
 )
 
 func testBuild(t *testing.T, context spec.G, it spec.S) {

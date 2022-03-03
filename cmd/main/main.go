@@ -24,7 +24,7 @@ import (
 	"github.com/paketo-buildpacks/libpak"
 	"github.com/paketo-buildpacks/libpak/bard"
 
-	"github.com/paketo-buildpacks/graalvm/graalvm"
+	"github.com/paketo-buildpacks/graalvm/v7/graalvm"
 )
 
 func main() {
