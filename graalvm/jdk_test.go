@@ -33,7 +33,7 @@ import (
 	"github.com/sclevine/spec"
 	"github.com/stretchr/testify/mock"
 
-	"github.com/paketo-buildpacks/graalvm/graalvm"
+	"github.com/paketo-buildpacks/graalvm/v7/graalvm"
 )
 
 func testJDK(t *testing.T, context spec.G, it spec.S) {
