@@ -142,7 +142,7 @@ api = "0.7"
     sha256 = "36e4a2a9a73a19b03883f9e783bc8bde7c214bb0fa4b617379cb81798de425bf"
     stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*"]
     uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-22.1.0/native-image-installable-svm-java11-linux-amd64-22.1.0.jar"
-    version = "11.0.15"
+    version = "22.1.0"
 
     [[metadata.dependencies.licenses]]
       type = "GPL-2.0 WITH Classpath-exception-2.0"
