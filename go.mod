@@ -10,7 +10,7 @@ require (
 	github.com/paketo-buildpacks/libpak v1.60.1
 	github.com/pavel-v-chernykh/keystore-go v2.1.0+incompatible
 	github.com/sclevine/spec v1.4.0
-	github.com/stretchr/testify v1.7.4
+	github.com/stretchr/testify v1.7.5
 )
 
 require (
