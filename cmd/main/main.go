@@ -17,14 +17,11 @@
 package main
 
 import (
-	"os"
-
+	"github.com/paketo-buildpacks/libjvm"
 	"github.com/paketo-buildpacks/libjvm/helper"
-
 	"github.com/paketo-buildpacks/libpak"
 	"github.com/paketo-buildpacks/libpak/bard"
-
-	"github.com/paketo-buildpacks/graalvm/v7/graalvm"
+	"os"
 )
 
 func main() {
@@ -33,8 +30,14 @@ func main() {
 	// not used directly, but this forces the helper module to be included in the module
 	// we need the helper module because of the way that `scripts/build/sh` builds the helper cmd
 	_ = helper.ActiveProcessorCount{Logger: logger}
+
 	libpak.Main(
-		graalvm.Detect{},
-		graalvm.Build{Logger: logger},
+		libjvm.Detect{},
+		libjvm.NewBuild(logger, libjvm.WithNativeImage(
+			libjvm.NativeImage{
+				BundledWithJDK: false,
+				CustomCommand:  "/bin/gu",
+				CustomArgs:     []string{"install", "--local-file"},
+			})),
 	)
 }
