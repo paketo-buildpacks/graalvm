@@ -3,7 +3,7 @@ module github.com/paketo-buildpacks/graalvm/v7
 go 1.18
 
 require (
-	github.com/paketo-buildpacks/libjvm v1.39.0
+	github.com/paketo-buildpacks/libjvm v1.40.0
 	github.com/paketo-buildpacks/libpak v1.61.0
 )
 
