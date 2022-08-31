@@ -1,6 +1,6 @@
 # `gcr.io/paketo-buildpacks/graalvm`
 
-The Paketo GraalVM Buildpack is a Cloud Native Buildpack that provides the GraalVM implementations of the JDK and GraalVM [Native Image builder][native-image].
+The Paketo Buildpack for GraalVM is a Cloud Native Buildpack that provides the GraalVM implementations of the JDK and GraalVM [Native Image builder][native-image].
 
 This buildpack is designed to work in collaboration with other buildpacks which request contributions of JREs, JDKs, or Native Image builder.
 
