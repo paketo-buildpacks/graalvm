@@ -19,7 +19,7 @@ api = "0.7"
   homepage = "https://github.com/paketo-buildpacks/graalvm"
   id = "paketo-buildpacks/graalvm"
   keywords = ["java", "jvm", "jre", "jdk", "native-image"]
-  name = "Paketo GraalVM Buildpack"
+  name = "Paketo Buildpack for GraalVM"
   sbom-formats = ["application/vnd.cyclonedx+json", "application/vnd.syft+json"]
   version = "{{.version}}"
 
