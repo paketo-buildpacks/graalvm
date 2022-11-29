@@ -55,3 +55,22 @@ dependencies:
     glob:    native-image-installable-svm-java17-linux-amd64-.+.jar
     token:   ${{ secrets.JAVA_GITHUB_TOKEN }}
     version: 17
+- name:            JDK 19
+  id:              jdk
+  version_pattern: "19\\.[\\d]+\\.[\\d]+"
+  purl_pattern:    "19\\.[\\d]+\\.[\\d]+"
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/graalvm-dependency:main
+  with:
+    glob:    graalvm-ce-java19-linux-amd64-.+.tar.gz
+    token:   ${{ secrets.JAVA_GITHUB_TOKEN }}
+    version: 19
+- name:            Native Image 19
+  id:              native-image-svm
+  version_pattern: "19\\.[\\d]+\\.[\\d]+"
+  cpe_pattern:     "[\\d]+\\.[\\d]+\\.[\\d]+\\.?[\\d]?"
+  purl_pattern:    "[\\d]+\\.[\\d]+\\.[\\d]+\\.?[\\d]?"
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/graalvm-dependency:main
+  with:
+    glob:    native-image-installable-svm-java19-linux-amd64-.+.jar
+    token:   ${{ secrets.JAVA_GITHUB_TOKEN }}
+    version: 19
