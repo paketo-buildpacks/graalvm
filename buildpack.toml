@@ -161,14 +161,14 @@ api = "0.7"
       uri = "https://openjdk.java.net/legal/gplv2+ce.html"
 
   [[metadata.dependencies]]
-    cpes = ["cpe:2.3:a:oracle:jdk:17.0.5:*:*:*:*:*:*:*:*"]
+    cpes = ["cpe:2.3:a:oracle:jdk:17.0.6:*:*:*:*:*:*:*:*"]
     id = "jdk"
     name = "GraalVM JDK"
-    purl = "pkg:generic/graalvm-jdk@17.0.5"
-    sha256 = "3473d8b3b1bc682e95adfb3ac1d9a59b51b0f43e2b752f2a5b550e4ebfa2fd17"
+    purl = "pkg:generic/graalvm-jdk@17.0.6"
+    sha256 = "3acf4a59ae38cb0cd331a81777f6d24f8fdc6179ac25e5b198b6e08c444c9129"
     stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*"]
-    uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-22.3.0/graalvm-ce-java17-linux-amd64-22.3.0.tar.gz"
-    version = "17.0.5"
+    uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-22.3.1/graalvm-ce-java17-linux-amd64-22.3.1.tar.gz"
+    version = "17.0.6"
 
     [[metadata.dependencies.licenses]]
       type = "GPL-2.0 WITH Classpath-exception-2.0"
