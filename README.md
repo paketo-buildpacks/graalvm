@@ -4,6 +4,10 @@ The Paketo Buildpack for GraalVM is a Cloud Native Buildpack that provides the G
 
 This buildpack is designed to work in collaboration with other buildpacks which request contributions of JREs, JDKs, or Native Image builder.
 
+## Upstream releases
+
+The Paketo team will do its best to provide the latest GraalVM implementations of the JDK and GraalVM, whenever they become available, according to this schedule: https://www.graalvm.org/release-notes/release-calendar/#planned-releases
+
 ## Behavior
 
 This buildpack will participate if any of the following conditions are met
