@@ -44,3 +44,27 @@ dependencies:
     tag_filter: "^jdk-(20\\.[\\d]+\\.[\\d])$"
     token:      ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
     version:    20
+- name:            Native Image 17
+  id:              native-image-svm
+  version_pattern: "17\\.[\\d]+\\.[\\d]+"
+  purl_pattern:    "17\\.[\\d]+\\.[\\d]+"
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
+  with:
+    glob:       graalvm-community-jdk-.*_linux-x64_bin.tar.gz
+    owner:      graalvm
+    repository: graalvm-ce-builds
+    tag_filter: "^jdk-(17\\.[\\d]+\\.[\\d])$"
+    token:      ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
+    version:    17
+- name:            Native Image 20
+  id:              native-image-svm
+  version_pattern: "20\\.[\\d]+\\.[\\d]+"
+  purl_pattern:    "20\\.[\\d]+\\.[\\d]+"
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/graalvm-dependency:main
+  with:
+    glob:       graalvm-community-jdk-.*_linux-x64_bin.tar.gz
+    owner:      graalvm
+    repository: graalvm-ce-builds
+    tag_filter: "^jdk-(20\\.[\\d]+\\.[\\d])$"
+    token:      ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
+    version:    20
