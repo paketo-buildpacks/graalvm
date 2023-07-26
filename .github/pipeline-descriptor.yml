@@ -36,7 +36,7 @@ dependencies:
   id:              jdk
   version_pattern: "20\\.[\\d]+\\.[\\d]+"
   purl_pattern:    "20\\.[\\d]+\\.[\\d]+"
-  uses:            docker://ghcr.io/paketo-buildpacks/actions/graalvm-dependency:main
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
   with:
     glob:       graalvm-community-jdk-.*_linux-x64_bin.tar.gz
     owner:      graalvm
@@ -60,7 +60,7 @@ dependencies:
   id:              native-image-svm
   version_pattern: "20\\.[\\d]+\\.[\\d]+"
   purl_pattern:    "20\\.[\\d]+\\.[\\d]+"
-  uses:            docker://ghcr.io/paketo-buildpacks/actions/graalvm-dependency:main
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
   with:
     glob:       graalvm-community-jdk-.*_linux-x64_bin.tar.gz
     owner:      graalvm

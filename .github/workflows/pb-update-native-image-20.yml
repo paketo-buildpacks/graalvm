@@ -42,7 +42,7 @@ jobs:
                 YJ_VERSION: 5.0.0
             - uses: actions/checkout@v3
             - id: dependency
-              uses: docker://ghcr.io/paketo-buildpacks/actions/graalvm-dependency:main
+              uses: docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
               with:
                 glob: graalvm-community-jdk-.*_linux-x64_bin.tar.gz
                 owner: graalvm
