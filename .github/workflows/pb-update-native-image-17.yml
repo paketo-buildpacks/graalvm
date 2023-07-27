@@ -42,9 +42,12 @@ jobs:
                 YJ_VERSION: 5.0.0
             - uses: actions/checkout@v3
             - id: dependency
-              uses: docker://ghcr.io/paketo-buildpacks/actions/graalvm-dependency:main
+              uses: docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
               with:
-                glob: native-image-installable-svm-java17-linux-amd64-.+.jar
+                glob: graalvm-community-jdk-.*_linux-x64_bin.tar.gz
+                owner: graalvm
+                repository: graalvm-ce-builds
+                tag_filter: ^jdk-(17\.[\d]+\.[\d])$
                 token: ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
                 version: 17
             - name: Update Buildpack Dependency
@@ -88,10 +91,10 @@ jobs:
                 echo "version-label=${LABEL}" >> "$GITHUB_OUTPUT"
               env:
                 CPE: ${{ steps.dependency.outputs.cpe }}
-                CPE_PATTERN: '[\d]+\.[\d]+\.[\d]+\.?[\d]?'
+                CPE_PATTERN: ""
                 ID: native-image-svm
                 PURL: ${{ steps.dependency.outputs.purl }}
-                PURL_PATTERN: '[\d]+\.[\d]+\.[\d]+\.?[\d]?'
+                PURL_PATTERN: 17\.[\d]+\.[\d]+
                 SHA256: ${{ steps.dependency.outputs.sha256 }}
                 URI: ${{ steps.dependency.outputs.uri }}
                 VERSION: ${{ steps.dependency.outputs.version }}

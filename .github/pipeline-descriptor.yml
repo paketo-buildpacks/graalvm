@@ -20,60 +20,51 @@ docker_credentials:
   password: ${{ secrets.PAKETO_BUILDPACKS_DOCKERHUB_PASSWORD }}
 
 dependencies:
-- name:            JDK 11
-  id:              jdk
-  version_pattern: "11\\.[\\d]+\\.[\\d]+"
-  purl_pattern:    "11\\.[\\d]+\\.[\\d]+"
-  uses:            docker://ghcr.io/paketo-buildpacks/actions/graalvm-dependency:main
-  with:
-    glob:    graalvm-ce-java11-linux-amd64-.+.tar.gz
-    token:   ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
-    version: 11
-- name:            Native Image 11
-  id:              native-image-svm
-  version_pattern: "11\\.[\\d]+\\.[\\d]+"
-  cpe_pattern:     "[\\d]+\\.[\\d]+\\.[\\d]+\\.?[\\d]?"
-  purl_pattern:    "[\\d]+\\.[\\d]+\\.[\\d]+\\.?[\\d]?"
-  uses:            docker://ghcr.io/paketo-buildpacks/actions/graalvm-dependency:main
-  with:
-    glob:    native-image-installable-svm-java11-linux-amd64-.+.jar
-    token:   ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
-    version: 11
 - name:            JDK 17
   id:              jdk
   version_pattern: "17\\.[\\d]+\\.[\\d]+"
   purl_pattern:    "17\\.[\\d]+\\.[\\d]+"
-  uses:            docker://ghcr.io/paketo-buildpacks/actions/graalvm-dependency:main
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
   with:
-    glob:    graalvm-ce-java17-linux-amd64-.+.tar.gz
-    token:   ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
-    version: 17
+    glob:       graalvm-community-jdk-.*_linux-x64_bin.tar.gz
+    owner:      graalvm
+    repository: graalvm-ce-builds
+    tag_filter: "^jdk-(17\\.[\\d]+\\.[\\d])$"
+    token:      ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
+    version:    17
+- name:            JDK 20
+  id:              jdk
+  version_pattern: "20\\.[\\d]+\\.[\\d]+"
+  purl_pattern:    "20\\.[\\d]+\\.[\\d]+"
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
+  with:
+    glob:       graalvm-community-jdk-.*_linux-x64_bin.tar.gz
+    owner:      graalvm
+    repository: graalvm-ce-builds
+    tag_filter: "^jdk-(20\\.[\\d]+\\.[\\d])$"
+    token:      ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
+    version:    20
 - name:            Native Image 17
   id:              native-image-svm
   version_pattern: "17\\.[\\d]+\\.[\\d]+"
-  cpe_pattern:     "[\\d]+\\.[\\d]+\\.[\\d]+\\.?[\\d]?"
-  purl_pattern:    "[\\d]+\\.[\\d]+\\.[\\d]+\\.?[\\d]?"
-  uses:            docker://ghcr.io/paketo-buildpacks/actions/graalvm-dependency:main
+  purl_pattern:    "17\\.[\\d]+\\.[\\d]+"
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
   with:
-    glob:    native-image-installable-svm-java17-linux-amd64-.+.jar
-    token:   ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
-    version: 17
-- name:            JDK 19
-  id:              jdk
-  version_pattern: "19\\.[\\d]+\\.[\\d]+"
-  purl_pattern:    "19\\.[\\d]+\\.[\\d]+"
-  uses:            docker://ghcr.io/paketo-buildpacks/actions/graalvm-dependency:main
-  with:
-    glob:    graalvm-ce-java19-linux-amd64-.+.tar.gz
-    token:   ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
-    version: 19
-- name:            Native Image 19
+    glob:       graalvm-community-jdk-.*_linux-x64_bin.tar.gz
+    owner:      graalvm
+    repository: graalvm-ce-builds
+    tag_filter: "^jdk-(17\\.[\\d]+\\.[\\d])$"
+    token:      ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
+    version:    17
+- name:            Native Image 20
   id:              native-image-svm
-  version_pattern: "19\\.[\\d]+\\.[\\d]+"
-  cpe_pattern:     "[\\d]+\\.[\\d]+\\.[\\d]+\\.?[\\d]?"
-  purl_pattern:    "[\\d]+\\.[\\d]+\\.[\\d]+\\.?[\\d]?"
-  uses:            docker://ghcr.io/paketo-buildpacks/actions/graalvm-dependency:main
+  version_pattern: "20\\.[\\d]+\\.[\\d]+"
+  purl_pattern:    "20\\.[\\d]+\\.[\\d]+"
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
   with:
-    glob:    native-image-installable-svm-java19-linux-amd64-.+.jar
-    token:   ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
-    version: 19
+    glob:       graalvm-community-jdk-.*_linux-x64_bin.tar.gz
+    owner:      graalvm
+    repository: graalvm-ce-builds
+    tag_filter: "^jdk-(20\\.[\\d]+\\.[\\d])$"
+    token:      ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
+    version:    20

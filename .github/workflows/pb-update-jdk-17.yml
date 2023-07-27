@@ -42,9 +42,12 @@ jobs:
                 YJ_VERSION: 5.0.0
             - uses: actions/checkout@v3
             - id: dependency
-              uses: docker://ghcr.io/paketo-buildpacks/actions/graalvm-dependency:main
+              uses: docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
               with:
-                glob: graalvm-ce-java17-linux-amd64-.+.tar.gz
+                glob: graalvm-community-jdk-.*_linux-x64_bin.tar.gz
+                owner: graalvm
+                repository: graalvm-ce-builds
+                tag_filter: ^jdk-(17\.[\d]+\.[\d])$
                 token: ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
                 version: 17
             - name: Update Buildpack Dependency
