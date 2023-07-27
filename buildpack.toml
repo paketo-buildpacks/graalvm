@@ -138,7 +138,7 @@ api = "0.7"
     name = "GraalVM for JDK"
     purl = "pkg:generic/graalvm-jdk@17.0.8"
     sha256 = "1dffdf5c7cc5bf38558e9f093eef6a14072a6dff0be3a9906208b37b53ecc009"
-    stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "*"]
+    stacks = ["*"]
     uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-17.0.8/graalvm-community-jdk-17.0.8_linux-x64_bin.tar.gz"
     version = "17.0.8"
 
