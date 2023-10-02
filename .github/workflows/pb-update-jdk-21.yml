@@ -1,4 +1,4 @@
-name: Update Native Image 20
+name: Update JDK 21
 "on":
     schedule:
         - cron: 0 5 * * 1-5
@@ -47,9 +47,9 @@ jobs:
                 glob: graalvm-community-jdk-.*_linux-x64_bin.tar.gz
                 owner: graalvm
                 repository: graalvm-ce-builds
-                tag_filter: ^jdk-(20\.[\d]+\.[\d])$
+                tag_filter: ^jdk-(21\.[\d]+\.[\d])$
                 token: ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
-                version: 20
+                version: 21
             - name: Update Buildpack Dependency
               id: buildpack
               run: |
@@ -92,24 +92,24 @@ jobs:
               env:
                 CPE: ${{ steps.dependency.outputs.cpe }}
                 CPE_PATTERN: ""
-                ID: native-image-svm
+                ID: jdk
                 PURL: ${{ steps.dependency.outputs.purl }}
-                PURL_PATTERN: 20\.[\d]+\.[\d]+
+                PURL_PATTERN: 21\.[\d]+\.[\d]+
                 SHA256: ${{ steps.dependency.outputs.sha256 }}
                 URI: ${{ steps.dependency.outputs.uri }}
                 VERSION: ${{ steps.dependency.outputs.version }}
-                VERSION_PATTERN: 20\.[\d]+\.[\d]+
+                VERSION_PATTERN: 21\.[\d]+\.[\d]+
             - uses: peter-evans/create-pull-request@v5
               with:
                 author: ${{ secrets.JAVA_GITHUB_USERNAME }} <${{ secrets.JAVA_GITHUB_USERNAME }}@users.noreply.github.com>
-                body: Bumps `Native Image 20` from `${{ steps.buildpack.outputs.old-version }}` to `${{ steps.buildpack.outputs.new-version }}`.
-                branch: update/buildpack/native-image-20
+                body: Bumps `JDK 21` from `${{ steps.buildpack.outputs.old-version }}` to `${{ steps.buildpack.outputs.new-version }}`.
+                branch: update/buildpack/jdk-21
                 commit-message: |-
-                    Bump Native Image 20 from ${{ steps.buildpack.outputs.old-version }} to ${{ steps.buildpack.outputs.new-version }}
+                    Bump JDK 21 from ${{ steps.buildpack.outputs.old-version }} to ${{ steps.buildpack.outputs.new-version }}
 
-                    Bumps Native Image 20 from ${{ steps.buildpack.outputs.old-version }} to ${{ steps.buildpack.outputs.new-version }}.
+                    Bumps JDK 21 from ${{ steps.buildpack.outputs.old-version }} to ${{ steps.buildpack.outputs.new-version }}.
                 delete-branch: true
                 labels: ${{ steps.buildpack.outputs.version-label }}, type:dependency-upgrade
                 signoff: true
-                title: Bump Native Image 20 from ${{ steps.buildpack.outputs.old-version }} to ${{ steps.buildpack.outputs.new-version }}
+                title: Bump JDK 21 from ${{ steps.buildpack.outputs.old-version }} to ${{ steps.buildpack.outputs.new-version }}
                 token: ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
