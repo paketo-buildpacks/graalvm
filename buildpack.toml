@@ -149,16 +149,16 @@ api = "0.7"
       uri = "https://openjdk.java.net/legal/gplv2+ce.html"
 
   [[metadata.dependencies]]
-    cpes = ["cpe:2.3:a:oracle:jdk:21.0.1:*:*:*:*:*:*:*:*"]
+    cpes = ["cpe:2.3:a:oracle:jdk:21.0.2:*:*:*:*:*:*:*:*"]
     id = "jdk"
     name = "GraalVM for JDK"
-    purl = "pkg:generic/graalvm-jdk@21.0.1"
-    sha256 = "5283ee48a61633f59a49ecdf0ef0ab4c5a8b006c16ce95209df740bd2aee73bf"
-    source = "https://github.com/graalvm/graalvm-ce-builds/archive/refs/tags/jdk-21.0.1.tar.gz"
-    source-sha256 = "0d24995eab6372d41469167cae1e37b2b5e4d50f13f0bd7cf5a21d3b27a6940f"
+    purl = "pkg:generic/graalvm-jdk@21.0.2"
+    sha256 = "b048069aaa3a99b84f5b957b162cc181a32a4330cbc35402766363c5be76ae48"
+    source = "https://github.com/graalvm/graalvm-ce-builds/archive/refs/tags/jdk-21.0.2.tar.gz"
+    source-sha256 = "a99dfd8246c0e6cbbf756e76f301426ea58eeb85da1b172a566e2ba3e1583e5a"
     stacks = ["*"]
-    uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-21.0.1/graalvm-community-jdk-21.0.1_linux-x64_bin.tar.gz"
-    version = "21.0.1"
+    uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-21.0.2/graalvm-community-jdk-21.0.2_linux-x64_bin.tar.gz"
+    version = "21.0.2"
 
     [[metadata.dependencies.licenses]]
       type = "GPL-2.0 WITH Classpath-exception-2.0"
