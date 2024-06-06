@@ -1,4 +1,4 @@
-name: Update JDK 17
+name: Update JDK 17 ARM64
 "on":
     schedule:
         - cron: 0 5 * * 1-5
@@ -27,6 +27,7 @@ jobs:
             - id: dependency
               uses: docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
               with:
+                arch: arm64
                 glob: graalvm-community-jdk-.*_linux-x64_bin.tar.gz
                 owner: graalvm
                 repository: graalvm-ce-builds
@@ -79,7 +80,7 @@ jobs:
                 echo "new-version=${VERSION}" >> "$GITHUB_OUTPUT"
                 echo "version-label=${LABEL}" >> "$GITHUB_OUTPUT"
               env:
-                ARCH: ""
+                ARCH: arm64
                 CPE: ${{ steps.dependency.outputs.cpe }}
                 CPE_PATTERN: ""
                 ID: jdk
@@ -94,14 +95,14 @@ jobs:
             - uses: peter-evans/create-pull-request@v6
               with:
                 author: ${{ secrets.JAVA_GITHUB_USERNAME }} <${{ secrets.JAVA_GITHUB_USERNAME }}@users.noreply.github.com>
-                body: Bumps `JDK 17` from `${{ steps.buildpack.outputs.old-version }}` to `${{ steps.buildpack.outputs.new-version }}`.
-                branch: update/buildpack/jdk-17
+                body: Bumps `JDK 17 ARM64` from `${{ steps.buildpack.outputs.old-version }}` to `${{ steps.buildpack.outputs.new-version }}`.
+                branch: update/buildpack/jdk-17-arm-64
                 commit-message: |-
-                    Bump JDK 17 from ${{ steps.buildpack.outputs.old-version }} to ${{ steps.buildpack.outputs.new-version }}
+                    Bump JDK 17 ARM64 from ${{ steps.buildpack.outputs.old-version }} to ${{ steps.buildpack.outputs.new-version }}
 
-                    Bumps JDK 17 from ${{ steps.buildpack.outputs.old-version }} to ${{ steps.buildpack.outputs.new-version }}.
+                    Bumps JDK 17 ARM64 from ${{ steps.buildpack.outputs.old-version }} to ${{ steps.buildpack.outputs.new-version }}.
                 delete-branch: true
                 labels: ${{ steps.buildpack.outputs.version-label }}, type:dependency-upgrade
                 signoff: true
-                title: Bump JDK 17 from ${{ steps.buildpack.outputs.old-version }} to ${{ steps.buildpack.outputs.new-version }}
+                title: Bump JDK 17 ARM64 from ${{ steps.buildpack.outputs.old-version }} to ${{ steps.buildpack.outputs.new-version }}
                 token: ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
