@@ -79,7 +79,7 @@ dependencies:
   purl_pattern:    "17\\.[\\d]+\\.[\\d]+"
   uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
   with:
-    glob:       graalvm-community-jdk-.*_linux-x64_bin.tar.gz
+    glob:       graalvm-community-jdk-.*_linux-aarch64_bin.tar.gz
     owner:      graalvm
     repository: graalvm-ce-builds
     tag_filter: "^jdk-(17\\.[\\d]+\\.[\\d])$"
@@ -92,7 +92,7 @@ dependencies:
   purl_pattern:    "21\\.[\\d]+\\.[\\d]+"
   uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
   with:
-    glob:       graalvm-community-jdk-.*_linux-x64_bin.tar.gz
+    glob:       graalvm-community-jdk-.*_linux-aarch64_bin.tar.gz
     owner:      graalvm
     repository: graalvm-ce-builds
     tag_filter: "^jdk-(21\\.[\\d]+\\.[\\d])$"
@@ -105,7 +105,7 @@ dependencies:
   purl_pattern:    "17\\.[\\d]+\\.[\\d]+"
   uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
   with:
-    glob:       graalvm-community-jdk-.*_linux-x64_bin.tar.gz
+    glob:       graalvm-community-jdk-.*_linux-aarch64_bin.tar.gz
     owner:      graalvm
     repository: graalvm-ce-builds
     tag_filter: "^jdk-(17\\.[\\d]+\\.[\\d])$"
@@ -118,7 +118,7 @@ dependencies:
   purl_pattern:    "21\\.[\\d]+\\.[\\d]+"
   uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
   with:
-    glob:       graalvm-community-jdk-.*_linux-x64_bin.tar.gz
+    glob:       graalvm-community-jdk-.*_linux-aarch64_bin.tar.gz
     owner:      graalvm
     repository: graalvm-ce-builds
     tag_filter: "^jdk-(21\\.[\\d]+\\.[\\d])$"
