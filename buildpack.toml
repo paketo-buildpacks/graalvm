@@ -201,11 +201,11 @@ api = "0.7"
     id = "jdk"
     name = "GraalVM for JDK"
     purl = "pkg:generic/graalvm-jdk@17.0.9&arch=arm64"
-    sha256 = "c3281b21f5220c2f76cf6fa0d646bc42e2d729af2c022bb06e557a613ba16102"
+    sha256 = "e47ba7229cef02393e19d5b8f46f7f1cab4829dd17bfe84d5431fc8ff0e22a96"
     source = "https://github.com/graalvm/graalvm-ce-builds/archive/refs/tags/jdk-17.0.9.tar.gz"
     source-sha256 = "488b8d968a114f52606cab5e080b53d264e550c8f3e66993952363744df2b63e"
     stacks = ["*"]
-    uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-17.0.9/graalvm-community-jdk-17.0.9_linux-aarch64_bin.tar.gz"
+    uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-17.0.9/graalvm-community-jdk-17.0.9_linux-x64_bin.tar.gz"
     version = "17.0.9"
 
     [[metadata.dependencies.licenses]]
