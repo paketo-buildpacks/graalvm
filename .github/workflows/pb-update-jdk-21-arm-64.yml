@@ -1,4 +1,4 @@
-name: Update JDK 17
+name: Update JDK 21 ARM64
 "on":
     schedule:
         - cron: 0 5 * * 1-5
@@ -27,12 +27,13 @@ jobs:
             - id: dependency
               uses: docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
               with:
+                arch: arm64
                 glob: graalvm-community-jdk-.*_linux-x64_bin.tar.gz
                 owner: graalvm
                 repository: graalvm-ce-builds
-                tag_filter: ^jdk-(17\.[\d]+\.[\d])$
+                tag_filter: ^jdk-(21\.[\d]+\.[\d])$
                 token: ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
-                version: 17
+                version: 21
             - name: Update Buildpack Dependency
               id: buildpack
               run: |
@@ -79,29 +80,29 @@ jobs:
                 echo "new-version=${VERSION}" >> "$GITHUB_OUTPUT"
                 echo "version-label=${LABEL}" >> "$GITHUB_OUTPUT"
               env:
-                ARCH: ""
+                ARCH: arm64
                 CPE: ${{ steps.dependency.outputs.cpe }}
                 CPE_PATTERN: ""
                 ID: jdk
                 PURL: ${{ steps.dependency.outputs.purl }}
-                PURL_PATTERN: 17\.[\d]+\.[\d]+
+                PURL_PATTERN: 21\.[\d]+\.[\d]+
                 SHA256: ${{ steps.dependency.outputs.sha256 }}
                 SOURCE_SHA256: ${{ steps.dependency.outputs.source_sha256 }}
                 SOURCE_URI: ${{ steps.dependency.outputs.source }}
                 URI: ${{ steps.dependency.outputs.uri }}
                 VERSION: ${{ steps.dependency.outputs.version }}
-                VERSION_PATTERN: 17\.[\d]+\.[\d]+
+                VERSION_PATTERN: 21\.[\d]+\.[\d]+
             - uses: peter-evans/create-pull-request@v6
               with:
                 author: ${{ secrets.JAVA_GITHUB_USERNAME }} <${{ secrets.JAVA_GITHUB_USERNAME }}@users.noreply.github.com>
-                body: Bumps `JDK 17` from `${{ steps.buildpack.outputs.old-version }}` to `${{ steps.buildpack.outputs.new-version }}`.
-                branch: update/buildpack/jdk-17
+                body: Bumps `JDK 21 ARM64` from `${{ steps.buildpack.outputs.old-version }}` to `${{ steps.buildpack.outputs.new-version }}`.
+                branch: update/buildpack/jdk-21-arm-64
                 commit-message: |-
-                    Bump JDK 17 from ${{ steps.buildpack.outputs.old-version }} to ${{ steps.buildpack.outputs.new-version }}
+                    Bump JDK 21 ARM64 from ${{ steps.buildpack.outputs.old-version }} to ${{ steps.buildpack.outputs.new-version }}
 
-                    Bumps JDK 17 from ${{ steps.buildpack.outputs.old-version }} to ${{ steps.buildpack.outputs.new-version }}.
+                    Bumps JDK 21 ARM64 from ${{ steps.buildpack.outputs.old-version }} to ${{ steps.buildpack.outputs.new-version }}.
                 delete-branch: true
                 labels: ${{ steps.buildpack.outputs.version-label }}, type:dependency-upgrade
                 signoff: true
-                title: Bump JDK 17 from ${{ steps.buildpack.outputs.old-version }} to ${{ steps.buildpack.outputs.new-version }}
+                title: Bump JDK 21 ARM64 from ${{ steps.buildpack.outputs.old-version }} to ${{ steps.buildpack.outputs.new-version }}
                 token: ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}

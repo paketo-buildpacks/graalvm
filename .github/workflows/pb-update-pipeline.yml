@@ -16,7 +16,7 @@ jobs:
         steps:
             - uses: actions/setup-go@v5
               with:
-                go-version: "1.20"
+                go-version: "1.22"
             - name: Install octo
               run: |
                 #!/usr/bin/env bash
@@ -55,6 +55,12 @@ jobs:
                 )
 
                 git add .github/
+                git add .gitignore
+
+                if [ -f scripts/build.sh ]; then
+                  git add scripts/build.sh
+                fi
+
                 git checkout -- .
 
                 echo "old-version=${OLD_VERSION}" >> "$GITHUB_OUTPUT"

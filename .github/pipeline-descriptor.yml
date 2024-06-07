@@ -2,6 +2,9 @@ github:
   username: ${{ secrets.JAVA_GITHUB_USERNAME }}
   token:    ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
 
+helpers:
+  "bin/helper": "github.com/paketo-buildpacks/libjvm/cmd/helper"
+
 codeowners:
 - path:  "*"
   owner: "@paketo-buildpacks/java-maintainers"
@@ -68,4 +71,57 @@ dependencies:
     tag_filter: "^jdk-(21\\.[\\d]+\\.[\\d])$"
     token:      ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
     version:    21
-    
+
+# ARM64
+- name:            JDK 17 ARM64
+  id:              jdk
+  version_pattern: "17\\.[\\d]+\\.[\\d]+"
+  purl_pattern:    "17\\.[\\d]+\\.[\\d]+"
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
+  with:
+    glob:       graalvm-community-jdk-.*_linux-x64_bin.tar.gz
+    owner:      graalvm
+    repository: graalvm-ce-builds
+    tag_filter: "^jdk-(17\\.[\\d]+\\.[\\d])$"
+    token:      ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
+    version:    17
+    arch:       arm64
+- name:            JDK 21 ARM64
+  id:              jdk
+  version_pattern: "21\\.[\\d]+\\.[\\d]+"
+  purl_pattern:    "21\\.[\\d]+\\.[\\d]+"
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
+  with:
+    glob:       graalvm-community-jdk-.*_linux-x64_bin.tar.gz
+    owner:      graalvm
+    repository: graalvm-ce-builds
+    tag_filter: "^jdk-(21\\.[\\d]+\\.[\\d])$"
+    token:      ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
+    version:    21
+    arch:       arm64
+- name:            Native Image 17 ARM64
+  id:              native-image-svm
+  version_pattern: "17\\.[\\d]+\\.[\\d]+"
+  purl_pattern:    "17\\.[\\d]+\\.[\\d]+"
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
+  with:
+    glob:       graalvm-community-jdk-.*_linux-x64_bin.tar.gz
+    owner:      graalvm
+    repository: graalvm-ce-builds
+    tag_filter: "^jdk-(17\\.[\\d]+\\.[\\d])$"
+    token:      ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
+    version:    17
+    arch:       arm64
+- name:            Native Image 21 ARM64
+  id:              native-image-svm
+  version_pattern: "21\\.[\\d]+\\.[\\d]+"
+  purl_pattern:    "21\\.[\\d]+\\.[\\d]+"
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
+  with:
+    glob:       graalvm-community-jdk-.*_linux-x64_bin.tar.gz
+    owner:      graalvm
+    repository: graalvm-ce-builds
+    tag_filter: "^jdk-(21\\.[\\d]+\\.[\\d])$"
+    token:      ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
+    version:    21
+    arch:       arm64
