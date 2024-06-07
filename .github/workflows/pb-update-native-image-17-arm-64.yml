@@ -28,7 +28,7 @@ jobs:
               uses: docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
               with:
                 arch: arm64
-                glob: graalvm-community-jdk-.*_linux-x64_bin.tar.gz
+                glob: graalvm-community-jdk-.*_linux-aarch64_bin.tar.gz
                 owner: graalvm
                 repository: graalvm-ce-builds
                 tag_filter: ^jdk-(17\.[\d]+\.[\d])$
