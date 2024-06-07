@@ -249,11 +249,11 @@ api = "0.7"
     id = "native-image-svm"
     name = "GraalVM for Native Image"
     purl = "pkg:generic/graalvm-jdk@21.0.2&arch=arm64"
-    sha256 = "a34be691ce68f0acf4655c7c6c63a9a49ed276a11859d7224fd94fc2f657cd7a"
+    sha256 = "b048069aaa3a99b84f5b957b162cc181a32a4330cbc35402766363c5be76ae48"
     source = "https://github.com/graalvm/graalvm-ce-builds/archive/refs/tags/jdk-21.0.2.tar.gz"
     source-sha256 = "a99dfd8246c0e6cbbf756e76f301426ea58eeb85da1b172a566e2ba3e1583e5a"
     stacks = ["*"]
-    uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-21.0.2/graalvm-community-jdk-21.0.2_linux-aarch64_bin.tar.gz"
+    uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-21.0.2/graalvm-community-jdk-21.0.2_linux-x64_bin.tar.gz"
     version = "21.0.2"
 
     [[metadata.dependencies.licenses]]
