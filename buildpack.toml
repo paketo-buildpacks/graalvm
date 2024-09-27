@@ -165,6 +165,22 @@ api = "0.7"
       uri = "https://openjdk.java.net/legal/gplv2+ce.html"
 
   [[metadata.dependencies]]
+    cpes = ["cpe:2.3:a:oracle:jdk:22.0.2:*:*:*:*:*:*:*:*"]
+    id = "jdk"
+    name = "GraalVM for JDK"
+    purl = "pkg:generic/graalvm-jdk@22.0.2&arch=amd64"
+    sha256 = ""
+    source = "https://github.com/graalvm/graalvm-ce-builds/archive/refs/tags/jdk-22.0.2.tar.gz"
+    source-sha256 = ""
+    stacks = ["*"]
+    uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-22.0.2/graalvm-community-jdk-22.0.2_linux-x64_bin.tar.gz"
+    version = "22.0.2"
+
+    [[metadata.dependencies.licenses]]
+      type = "GPL-2.0 WITH Classpath-exception-2.0"
+      uri = "https://openjdk.java.net/legal/gplv2+ce.html"
+
+  [[metadata.dependencies]]
     cpes = ["cpe:2.3:a:oracle:jdk:17.0.9:*:*:*:*:*:*:*:*"]
     id = "native-image-svm"
     name = "GraalVM for Native Image"
@@ -197,6 +213,22 @@ api = "0.7"
       uri = "https://openjdk.java.net/legal/gplv2+ce.html"
 
   [[metadata.dependencies]]
+    cpes = ["cpe:2.3:a:oracle:jdk:22.0.2:*:*:*:*:*:*:*:*"]
+    id = "native-image-svm"
+    name = "GraalVM for Native Image"
+    purl = "pkg:generic/graalvm-jdk@22.0.2&arch=amd64"
+    sha256 = ""
+    source = "https://github.com/graalvm/graalvm-ce-builds/archive/refs/tags/jdk-22.0.2.tar.gz"
+    source-sha256 = ""
+    stacks = ["*"]
+    uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-22.0.2/graalvm-community-jdk-22.0.2_linux-x64_bin.tar.gz"
+    version = "22.0.2"
+
+    [[metadata.dependencies.licenses]]
+      type = "GPL-2.0 WITH Classpath-exception-2.0"
+      uri = "https://openjdk.java.net/legal/gplv2+ce.html"
+
+  [[metadata.dependencies]]
     cpes = ["cpe:2.3:a:oracle:jdk:17.0.9:*:*:*:*:*:*:*:*"]
     id = "jdk"
     name = "GraalVM for JDK"
@@ -223,6 +255,22 @@ api = "0.7"
     stacks = ["*"]
     uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-21.0.2/graalvm-community-jdk-21.0.2_linux-aarch64_bin.tar.gz"
     version = "21.0.2"
+
+    [[metadata.dependencies.licenses]]
+      type = "GPL-2.0 WITH Classpath-exception-2.0"
+      uri = "https://openjdk.java.net/legal/gplv2+ce.html"
+
+  [[metadata.dependencies]]
+    cpes = ["cpe:2.3:a:oracle:jdk:22.0.2:*:*:*:*:*:*:*:*"]
+    id = "jdk"
+    name = "GraalVM for JDK"
+    purl = "pkg:generic/graalvm-jdk@22.0.2&arch=arm64"
+    sha256 = ""
+    source = "https://github.com/graalvm/graalvm-ce-builds/archive/refs/tags/jdk-22.0.2.tar.gz"
+    source-sha256 = ""
+    stacks = ["*"]
+    uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-22.0.2/graalvm-community-jdk-22.0.2_linux-aarch64_bin.tar.gz"
+    version = "22.0.2"
 
     [[metadata.dependencies.licenses]]
       type = "GPL-2.0 WITH Classpath-exception-2.0"
@@ -259,6 +307,22 @@ api = "0.7"
     [[metadata.dependencies.licenses]]
       type = "GPL-2.0 WITH Classpath-exception-2.0"
       uri = "https://openjdk.java.net/legal/gplv2+ce.html"
+
+   [[metadata.dependencies]]
+    cpes = ["cpe:2.3:a:oracle:jdk:22.0.2:*:*:*:*:*:*:*:*"]
+    id = "native-image-svm"
+    name = "GraalVM for Native Image"
+    purl = "pkg:generic/graalvm-jdk@22.0.2&arch=arm64"
+    sha256 = ""
+    source = "https://github.com/graalvm/graalvm-ce-builds/archive/refs/tags/jdk-22.0.2.tar.gz"
+    source-sha256 = ""
+    stacks = ["*"]
+    uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-22.0.2/graalvm-community-jdk-22.0.2_linux-aarch64_bin.tar.gz"
+    version = "22.0.2"
+
+    [[metadata.dependencies.licenses]]
+      type = "GPL-2.0 WITH Classpath-exception-2.0"
+      uri = "https://openjdk.java.net/legal/gplv2+ce.html" 
 
 [[stacks]]
   id = "*"
