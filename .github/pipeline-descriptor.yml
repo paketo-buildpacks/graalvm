@@ -47,6 +47,18 @@ dependencies:
     tag_filter: "^jdk-(21\\.[\\d]+\\.[\\d])$"
     token:      ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
     version:    21
+- name:            JDK 22
+  id:              jdk
+  version_pattern: "22\\.[\\d]+\\.[\\d]+"
+  purl_pattern:    "22\\.[\\d]+\\.[\\d]+"
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
+  with:
+    glob:       graalvm-community-jdk-.*_linux-x64_bin.tar.gz
+    owner:      graalvm
+    repository: graalvm-ce-builds
+    tag_filter: "^jdk-(22\\.[\\d]+\\.[\\d])$"
+    token:      ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
+    version:    22
 - name:            Native Image 17
   id:              native-image-svm
   version_pattern: "17\\.[\\d]+\\.[\\d]+"
@@ -71,6 +83,18 @@ dependencies:
     tag_filter: "^jdk-(21\\.[\\d]+\\.[\\d])$"
     token:      ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
     version:    21
+- name:            Native Image 22
+  id:              native-image-svm
+  version_pattern: "22\\.[\\d]+\\.[\\d]+"
+  purl_pattern:    "22\\.[\\d]+\\.[\\d]+"
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
+  with:
+    glob:       graalvm-community-jdk-.*_linux-x64_bin.tar.gz
+    owner:      graalvm
+    repository: graalvm-ce-builds
+    tag_filter: "^jdk-(22\\.[\\d]+\\.[\\d])$"
+    token:      ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
+    version:    22
 
 # ARM64
 - name:            JDK 17 ARM64
@@ -99,6 +123,19 @@ dependencies:
     token:      ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
     version:    21
     arch:       arm64
+- name:            JDK 22 ARM64
+  id:              jdk
+  version_pattern: "22\\.[\\d]+\\.[\\d]+"
+  purl_pattern:    "22\\.[\\d]+\\.[\\d]+"
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
+  with:
+    glob:       graalvm-community-jdk-.*_linux-aarch64_bin.tar.gz
+    owner:      graalvm
+    repository: graalvm-ce-builds
+    tag_filter: "^jdk-(22\\.[\\d]+\\.[\\d])$"
+    token:      ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
+    version:    22
+    arch:       arm64
 - name:            Native Image 17 ARM64
   id:              native-image-svm
   version_pattern: "17\\.[\\d]+\\.[\\d]+"
@@ -124,4 +161,17 @@ dependencies:
     tag_filter: "^jdk-(21\\.[\\d]+\\.[\\d])$"
     token:      ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
     version:    21
+    arch:       arm64
+- name:            Native Image 22 ARM64
+  id:              native-image-svm
+  version_pattern: "22\\.[\\d]+\\.[\\d]+"
+  purl_pattern:    "22\\.[\\d]+\\.[\\d]+"
+  uses:            docker://ghcr.io/paketo-buildpacks/actions/github-release-dependency:main
+  with:
+    glob:       graalvm-community-jdk-.*_linux-aarch64_bin.tar.gz
+    owner:      graalvm
+    repository: graalvm-ce-builds
+    tag_filter: "^jdk-(22\\.[\\d]+\\.[\\d])$"
+    token:      ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
+    version:    22
     arch:       arm64
