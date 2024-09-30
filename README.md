@@ -6,7 +6,7 @@ This buildpack is designed to work in collaboration with other buildpacks which 
 
 ## Upstream releases
 
-The Paketo team will do its best to provide the latest GraalVM implementations of the JDK and GraalVM, whenever they become available, according to this schedule: https://www.graalvm.org/release-notes/release-calendar/#planned-releases
+The Paketo team will do its best to provide the latest GraalVM implementations of the JDK and GraalVM, whenever they become available, according to the [GraalVM Release Calendar](https://www.graalvm.org/release-calendar/).
 
 ## Behavior
 
