@@ -169,9 +169,9 @@ api = "0.7"
     id = "jdk"
     name = "GraalVM for JDK"
     purl = "pkg:generic/graalvm-jdk@23.0.0&arch=amd64"
-    sha256 = ""
+    sha256 = "440eb64bf548f37086f97d236a028d0a6ccf5cee9ed9caed2f70ded5a68312a0"
     source = "https://github.com/graalvm/graalvm-ce-builds/archive/refs/tags/jdk-23.0.0.tar.gz"
-    source-sha256 = ""
+    source-sha256 = "c85937e8b09f581e23d51d62408dc26f98f6c741e39be40b4236710611586636"
     stacks = ["*"]
     uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-23.0.0/graalvm-community-jdk-23.0.0_linux-x64_bin.tar.gz"
     version = "23.0.0"
@@ -308,7 +308,7 @@ api = "0.7"
       type = "GPL-2.0 WITH Classpath-exception-2.0"
       uri = "https://openjdk.java.net/legal/gplv2+ce.html"
 
-   [[metadata.dependencies]]
+  [[metadata.dependencies]]
     cpes = ["cpe:2.3:a:oracle:jdk:23.0.0:*:*:*:*:*:*:*:*"]
     id = "native-image-svm"
     name = "GraalVM for Native Image"
@@ -322,7 +322,7 @@ api = "0.7"
 
     [[metadata.dependencies.licenses]]
       type = "GPL-2.0 WITH Classpath-exception-2.0"
-      uri = "https://openjdk.java.net/legal/gplv2+ce.html" 
+      uri = "https://openjdk.java.net/legal/gplv2+ce.html"
 
 [[stacks]]
   id = "*"
