@@ -181,6 +181,22 @@ api = "0.7"
       uri = "https://openjdk.java.net/legal/gplv2+ce.html"
 
   [[metadata.dependencies]]
+    cpes = ["cpe:2.3:a:oracle:jdk:25.0.0:*:*:*:*:*:*:*:*"]
+    id = "jdk"
+    name = "GraalVM for JDK"
+    purl = "pkg:generic/graalvm-jdk@25.0.0?arch=amd64"
+    sha256 = "1862f2ce97387a303cae4c512cb21baf36fafd2457c3cbbc10d87db94b89d3dd"
+    source = "https://github.com/graalvm/graalvm-ce-builds/archive/refs/tags/jdk-25.0.0.tar.gz"
+    source-sha256 = "6aec8d28f3beee692c44fc0e8df40f37cdc98cbd92249fdb0817553ba7400b41"
+    stacks = ["*"]
+    uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-25.0.0/graalvm-community-jdk-25.0.0_linux-x64_bin.tar.gz"
+    version = "25.0.0"
+
+    [[metadata.dependencies.licenses]]
+      type = "GPL-2.0 WITH Classpath-exception-2.0"
+      uri = "https://openjdk.java.net/legal/gplv2+ce.html"
+
+  [[metadata.dependencies]]
     cpes = ["cpe:2.3:a:oracle:jdk:17.0.9:*:*:*:*:*:*:*:*"]
     id = "native-image-svm"
     name = "GraalVM for Native Image"
@@ -229,6 +245,22 @@ api = "0.7"
       uri = "https://openjdk.java.net/legal/gplv2+ce.html"
 
   [[metadata.dependencies]]
+    cpes = ["cpe:2.3:a:oracle:jdk:25.0.0:*:*:*:*:*:*:*:*"]
+    id = "native-image-svm"
+    name = "GraalVM for Native Image"
+    purl = "pkg:generic/graalvm-jdk@25.0.0?arch=amd64"
+    sha256 = "1862f2ce97387a303cae4c512cb21baf36fafd2457c3cbbc10d87db94b89d3dd"
+    source = "https://github.com/graalvm/graalvm-ce-builds/archive/refs/tags/jdk-25.0.0.tar.gz"
+    source-sha256 = "6aec8d28f3beee692c44fc0e8df40f37cdc98cbd92249fdb0817553ba7400b41"
+    stacks = ["*"]
+    uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-25.0.0/graalvm-community-jdk-25.0.0_linux-x64_bin.tar.gz"
+    version = "25.0.0"
+
+    [[metadata.dependencies.licenses]]
+      type = "GPL-2.0 WITH Classpath-exception-2.0"
+      uri = "https://openjdk.java.net/legal/gplv2+ce.html"
+
+  [[metadata.dependencies]]
     cpes = ["cpe:2.3:a:oracle:jdk:17.0.9:*:*:*:*:*:*:*:*"]
     id = "jdk"
     name = "GraalVM for JDK"
@@ -277,6 +309,22 @@ api = "0.7"
       uri = "https://openjdk.java.net/legal/gplv2+ce.html"
 
   [[metadata.dependencies]]
+    cpes = ["cpe:2.3:a:oracle:jdk:25.0.0:*:*:*:*:*:*:*:*"]
+    id = "jdk"
+    name = "GraalVM for JDK"
+    purl = "pkg:generic/graalvm-jdk@25.0.0?arch=arm64"
+    sha256 = "6c3c8b7617006c5d174d9cf7d357ccfb4bae77a4df1294ee28084fcb6eea8921"
+    source = "https://github.com/graalvm/graalvm-ce-builds/archive/refs/tags/jdk-25.0.0.tar.gz"
+    source-sha256 = "6aec8d28f3beee692c44fc0e8df40f37cdc98cbd92249fdb0817553ba7400b41"
+    stacks = ["*"]
+    uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-25.0.0/graalvm-community-jdk-25.0.0_linux-aarch64_bin.tar.gz"
+    version = "25.0.0"
+
+    [[metadata.dependencies.licenses]]
+      type = "GPL-2.0 WITH Classpath-exception-2.0"
+      uri = "https://openjdk.java.net/legal/gplv2+ce.html"
+
+  [[metadata.dependencies]]
     cpes = ["cpe:2.3:a:oracle:jdk:17.0.9:*:*:*:*:*:*:*:*"]
     id = "native-image-svm"
     name = "GraalVM for Native Image"
@@ -319,6 +367,22 @@ api = "0.7"
     stacks = ["*"]
     uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-24.0.2/graalvm-community-jdk-24.0.2_linux-aarch64_bin.tar.gz"
     version = "24.0.2"
+
+    [[metadata.dependencies.licenses]]
+      type = "GPL-2.0 WITH Classpath-exception-2.0"
+      uri = "https://openjdk.java.net/legal/gplv2+ce.html"
+
+  [[metadata.dependencies]]
+    cpes = ["cpe:2.3:a:oracle:jdk:25.0.0:*:*:*:*:*:*:*:*"]
+    id = "native-image-svm"
+    name = "GraalVM for Native Image"
+    purl = "pkg:generic/graalvm-jdk@25.0.0?arch=arm64"
+    sha256 = "6c3c8b7617006c5d174d9cf7d357ccfb4bae77a4df1294ee28084fcb6eea8921"
+    source = "https://github.com/graalvm/graalvm-ce-builds/archive/refs/tags/jdk-25.0.0.tar.gz"
+    source-sha256 = "6aec8d28f3beee692c44fc0e8df40f37cdc98cbd92249fdb0817553ba7400b41"
+    stacks = ["*"]
+    uri = "https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-25.0.0/graalvm-community-jdk-25.0.0_linux-aarch64_bin.tar.gz"
+    version = "25.0.0"
 
     [[metadata.dependencies.licenses]]
       type = "GPL-2.0 WITH Classpath-exception-2.0"
